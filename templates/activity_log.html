@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row align-items-center mb-5">
+    <div class="col">
+        <h1 class="page-title mb-2">Activity Log</h1>
+        <p class="page-subtitle mb-0">Everything that happens to your vault is recorded here for your records.</p>
+    </div>
+</div>
+
+<div class="bg-white rounded-3 shadow-sm border overflow-hidden">
+    <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light">
+            <tr>
+                <th class="py-3 px-4 fw-bold text-muted small">Action</th>
+                <th class="py-3 px-4 fw-bold text-muted small">Details</th>
+                <th class="py-3 px-4 fw-bold text-muted small">Time</th>
+                <th class="py-3 px-4 fw-bold text-muted small">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in activity_log %}
+            <tr>
+                <td class="px-4 py-3">
+                    {% if log.action == 'document_upload' %}
+                    <span class="d-flex align-items-center gap-2"><i class="fa-solid fa-file-arrow-up text-success"></i> Document Uploaded</span>
+                    {% elif log.action == 'emergency_access' %}
+                    <span class="d-flex align-items-center gap-2"><i class="fa-solid fa-lock-open text-danger"></i> Emergency Access</span>
+                    {% elif log.action == 'contact_added' %}
+                    <span class="d-flex align-items-center gap-2"><i class="fa-solid fa-user-plus text-primary"></i> Contact Added</span>
+                    {% elif log.action == 'login' %}
+                    <span class="d-flex align-items-center gap-2"><i class="fa-solid fa-arrow-right-to-bracket text-info"></i> Login</span>
+                    {% else %}
+                    <span class="d-flex align-items-center gap-2"><i class="fa-solid fa-circle-info text-muted"></i> {{ log.action }}</span>
+                    {% endif %}
+                </td>
+                <td class="px-4 py-3 text-muted small">{{ log.detail or '—' }}</td>
+                <td class="px-4 py-3 text-muted small">{{ log.timestamp.strftime('%d %b %Y, %H:%M') if log.timestamp else '—' }}</td>
+                <td class="px-4 py-3"><span class="badge bg-success bg-opacity-10 text-success border border-success">Recorded</span></td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="text-center py-5 text-muted">
+                    <i class="fa-solid fa-clipboard-list fa-2x mb-3 d-block"></i>
+                    No activity recorded yet. Actions like uploads and logins will appear here.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

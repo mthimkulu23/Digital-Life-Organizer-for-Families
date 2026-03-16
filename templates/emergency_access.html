@@ -1,37 +1,29 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<div class="container d-flex justify-content-center pt-5">
-    <div class="glass-card shadow-lg auth-card w-100 p-5 mt-4 border-danger border-top border-4 position-relative overflow-hidden">
-        <!-- Background Accents -->
-        <div class="position-absolute bg-danger rounded-circle blur-3xl opacity-10" style="width: 200px; height: 200px; top: -50px; right: -50px; z-index: 0; filter: blur(40px);"></div>
-        
-        <div class="text-center mb-4 position-relative z-1">
-            <div class="mx-auto bg-danger-soft text-danger d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 70px; height: 70px;">
-                <i class="fa-solid fa-truck-medical fs-1 pulse-icon"></i>
+{% block public_content %}
+<div class="auth-wrapper py-5">
+    <div class="auth-panel text-center border-danger mx-auto mt-4" style="border-top-width: 4px; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+        <div class="mb-4">
+            <div class="mx-auto rounded-circle bg-danger bg-opacity-10 text-danger d-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                <i class="fa-solid fa-truck-medical fs-2"></i>
             </div>
-            <h2 class="fw-bold text-dark">Emergency Access</h2>
+            <h2 class="mb-2 text-dark">Emergency Access</h2>
             <p class="text-muted small">Enter the 12-character emergency code provided by the vault owner to unlock their digital life.</p>
         </div>
         
-        <form action="{{ url_for('emergency_access') }}" method="POST" class="position-relative z-1">
+        <form action="{{ url_for('emergency_access') }}" method="POST" class="text-start">
             <div class="mb-4">
-                <label for="emergency_code" class="form-label small text-muted text-uppercase fw-bold"><i class="fa-solid fa-key me-1"></i> Emergency Code</label>
-                <input type="text" class="form-control form-control-lg text-center" id="emergency_code" name="emergency_code" placeholder="XXXX-XXXX-XXXX" required style="font-family: monospace; letter-spacing: 2px; font-weight: bold; font-size: 1.5rem;" autocomplete="off" maxlength="14">
-                <div class="form-text mt-2"><i class="fa-solid fa-lock text-success me-1"></i> Access is strictly logged and owner is notified.</div>
+                <label class="form-label text-muted fw-bold">Emergency Code</label>
+                <input type="text" class="form-control text-center fs-5 py-3" id="emergency_code" name="emergency_code" placeholder="XXXX-XXXX-XXXX" required style="font-family: monospace; letter-spacing: 2px; font-weight: bold;" autocomplete="off" maxlength="14">
+                <div class="form-text mt-2 small text-center"><i class="fa-solid fa-shield-halved text-success"></i> Secure connection. Access is strictly logged.</div>
             </div>
             
-            <button type="submit" class="btn btn-danger w-100 py-3 rounded-pill fw-bold shadow-lg fs-5 d-flex align-items-center justify-content-center"><i class="fa-solid fa-unlock-keyhole me-2"></i> Request Vault Unlock</button>
+            <button type="submit" class="btn btn-danger w-100 py-3 fw-bold fs-5 text-white shadow-sm">Unlock Vault</button>
         </form>
-        
-        <div class="text-center mt-4 pt-3 border-top position-relative z-1">
-            <p class="small text-muted mb-0"><i class="fa-solid fa-shield-halved text-primary me-1"></i> Secure LifeVault Protocol Active</p>
-        </div>
     </div>
 </div>
 
 <script>
-    // Simple script to format the emergency code input (auto append hyphens)
     document.getElementById('emergency_code').addEventListener('input', function (e) {
         let value = e.target.value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
         let formatted = '';

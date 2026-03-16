@@ -185,11 +185,119 @@ def vault():
     
     return render_template('vault.html', user=user, contacts=contacts, documents=documents)
 
+@app.route('/will_estate')
+def will_estate():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('will_estate.html')
+
+@app.route('/life_stories')
+def life_stories():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('life_stories.html')
+
+@app.route('/trusted_contacts')
+def trusted_contacts_page():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    contacts = list(contacts_collection.find({'user_id': session['user_id']}))
+    return render_template('trusted_contacts.html', contacts=contacts)
+
 @app.route('/vault/exit')
 def vault_exit():
     session.pop('emergency_view_user_id', None)
     flash('Safely exited the vault.', 'info')
     return redirect(url_for('home'))
+
+@app.route('/settings')
+def settings():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    user = users_collection.find_one({'_id': ObjectId(session['user_id'])})
+    return render_template('settings.html', user=user)
+
+@app.route('/update_profile', methods=['POST'])
+def update_profile():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    name = request.form.get('name')
+    email = request.form.get('email')
+    users_collection.update_one({'_id': ObjectId(session['user_id'])}, {'$set': {'name': name, 'email': email}})
+    session['user_name'] = name
+    flash('Profile updated successfully!', 'success')
+    return redirect(url_for('settings'))
+
+@app.route('/change_password', methods=['POST'])
+def change_password():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    user = users_collection.find_one({'_id': ObjectId(session['user_id'])})
+    current_password = request.form.get('current_password')
+    new_password = request.form.get('new_password')
+    confirm_password = request.form.get('confirm_password')
+    if not check_password_hash(user['password'], current_password):
+        flash('Current password is incorrect.', 'danger')
+        return redirect(url_for('settings'))
+    if new_password != confirm_password:
+        flash('New passwords do not match.', 'danger')
+        return redirect(url_for('settings'))
+    users_collection.update_one({'_id': ObjectId(session['user_id'])}, {'$set': {'password': generate_password_hash(new_password)}})
+    flash('Password changed successfully!', 'success')
+    return redirect(url_for('settings'))
+
+@app.route('/regenerate_code', methods=['POST'])
+def regenerate_code():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    new_code = generate_emergency_code()
+    users_collection.update_one({'_id': ObjectId(session['user_id'])}, {'$set': {'emergency_code': new_code}})
+    flash(f'New emergency code generated: {new_code}. Store it safely!', 'success')
+    return redirect(url_for('settings'))
+
+@app.route('/activity_log')
+def activity_log():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    log_col = db.activity_log
+    logs = list(log_col.find({'user_id': session['user_id']}).sort('timestamp', -1).limit(50))
+    return render_template('activity_log.html', activity_log=logs)
+
+@app.route('/add_device', methods=['POST'])
+def add_device():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    db.devices.insert_one({
+        'user_id': session['user_id'],
+        'device_name': request.form.get('device_name'),
+        'device_type': request.form.get('device_type'),
+        'device_pin': request.form.get('device_pin'),
+        'notes': request.form.get('notes'),
+    })
+    flash(f'Device "{request.form.get("device_name")}" registered to your vault.', 'success')
+    return redirect(url_for('dashboard'))
+
+@app.route('/add_account', methods=['POST'])
+def add_account():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    db.online_accounts.insert_one({
+        'user_id': session['user_id'],
+        'platform': request.form.get('platform'),
+        'username': request.form.get('username'),
+        'password': request.form.get('password'),
+        'wish': request.form.get('wish'),
+    })
+    flash(f'Account "{request.form.get("platform")}" saved to your vault.', 'success')
+    return redirect(url_for('dashboard'))
+
+@app.route('/help')
+def help_page():
+    return render_template('help.html')
+
+@app.route('/pricing')
+def pricing():
+    return render_template('pricing.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

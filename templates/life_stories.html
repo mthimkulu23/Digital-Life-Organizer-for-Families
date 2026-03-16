@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row align-items-center mb-5">
+    <div class="col-md-7 pe-lg-5">
+        <h1 class="page-title mb-3">Life Stories</h1>
+        <p class="page-subtitle mb-0">Record and encrypt personal memories or journals only accessible to those with the secret key.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm border p-4 text-center bg-white rounded-3 h-100 transition-hover">
+            <div class="mb-3">
+                <i class="fa-solid fa-microphone-lines text-success fa-3x bg-success bg-opacity-10 p-4 rounded-circle"></i>
+            </div>
+            <h5 class="fw-bold mb-3">Audio Memories</h5>
+            <p class="text-muted small mb-4">Upload voice clips of stories or words of encouragement.</p>
+            <button class="btn btn-outline-success px-4 py-2 rounded-pill fw-medium btn-sm mt-auto mx-auto" data-bs-toggle="modal" data-bs-target="#uploadDocModal">
+                Upload Audio Clip
+            </button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm border p-4 text-center bg-white rounded-3 h-100 transition-hover">
+            <div class="mb-3">
+                <i class="fa-solid fa-book-open text-primary fa-3x bg-primary bg-opacity-10 p-4 rounded-circle"></i>
+            </div>
+            <h5 class="fw-bold mb-3">End-of-life Journal</h5>
+            <p class="text-muted small mb-4">Upload written letters to your family attached to your estate.</p>
+            <button class="btn btn-outline-primary px-4 py-2 rounded-pill fw-medium btn-sm mt-auto mx-auto" data-bs-toggle="modal" data-bs-target="#uploadDocModal">
+                Upload Written Journal
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

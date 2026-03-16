@@ -1,97 +1,80 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<style>
-    body {
-        background-image: 
-            radial-gradient(at 0% 0%, rgba(239, 68, 68, 0.05) 0, transparent 40%),
-            radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.05) 0, transparent 40%);
-    }
-    .custom-navbar {
-        border-bottom: 2px solid #EF4444;
-    }
-</style>
-
-<div class="container py-4">
-    <!-- Vault Header Section -->
-    <div class="glass-card bg-danger-soft p-4 rounded-4 shadow-sm mb-4 border border-danger d-flex flex-column flex-md-row justify-content-between align-items-center">
-        <div class="d-flex align-items-center mb-3 mb-md-0">
-            <div class="bg-danger text-white rounded-circle p-3 me-4 d-flex align-items-center justify-content-center shadow-lg" style="width: 70px; height: 70px;">
-                <i class="fa-solid fa-lock-open fs-2 pulse-icon"></i>
-            </div>
-            <div>
-                <h3 class="fw-bold text-danger mb-1">Emergency Vault Unlocked</h3>
-                <p class="text-muted small mb-0 fw-medium">Viewing secure data for <strong>{{ user.name }}</strong> ({{ user.email }})</p>
-            </div>
-        </div>
-        <div class="bg-white p-3 rounded-pill shadow-sm d-flex align-items-center border border-light">
-            <i class="fa-solid fa-clock text-warning fs-5 me-2"></i>
-            <span class="small fw-bold text-dark">Access Logged Temporarily</span>
-        </div>
-    </div>
-
-    <!-- Instructions / Notes from User -->
-    <div class="glass-card shadow-lg mb-5 border-0 p-4 pb-0 position-relative overflow-hidden border-top border-warning border-4">
-        <h5 class="fw-bold text-warning mb-3 d-flex align-items-center"><i class="fa-solid fa-clipboard-list me-2"></i> Owner's Emergency Instructions</h5>
-        <div class="bg-light p-4 rounded-3 border mb-4">
-            <p class="mb-0 fst-italic text-dark">"If you are reading this, something has happened to me. Please use these documents to manage my estate and notify my trusted contacts below. Thank you for your help."</p>
-        </div>
+<div class="row align-items-center mb-5">
+    <div class="col-md-8 pe-lg-5">
+        <span class="tag-label text-danger">EMERGENCY VAULT UNLOCKED</span>
+        <h1 class="page-title mb-2 text-danger">Viewing Secure Data for {{ user.name }}</h1>
+        <p class="page-subtitle mb-4 text-muted">
+            The Digital Life Organizer of {{ user.email }} is currently open under emergency protocol.
+        </p>
         
-        <div class="row pt-2 border-top">
-            <!-- Documents -->
-            <div class="col-md-7 border-end-md pb-4 pb-md-0">
-                <h6 class="fw-bold mb-3"><i class="fa-solid fa-folder-open text-primary me-2"></i> Decrypted Documents ({{ documents|length }})</h6>
-                <div class="table-responsive bg-white rounded-3 border shadow-sm">
-                    <table class="table table-hover mb-0 align-middle">
-                        <thead class="bg-light">
-                            <tr>
-                                <th>Type</th>
-                                <th>Notes</th>
-                                <th class="text-end">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for doc in documents %}
-                            <tr>
-                                <td class="fw-medium border-0 pt-3">
-                                    <i class="fa-solid fa-file text-info me-2"></i>{{ doc.doc_type }}
-                                </td>
-                                <td class="small text-muted border-0 pt-3">{{ doc.notes or 'No notes provided' }}</td>
-                                <td class="text-end border-0 pt-3">
-                                    <button class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm fw-bold"><i class="fa-solid fa-download me-1"></i> View</button>
-                                </td>
-                            </tr>
-                            {% else %}
-                            <tr>
-                                <td colspan="3" class="text-center py-5 text-muted small fw-medium">No documents stored in the vault.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            
-            <!-- Trusted Contacts -->
-            <div class="col-md-5 ps-md-4">
-                <h6 class="fw-bold mb-3"><i class="fa-solid fa-users text-success me-2"></i> Verified Contacts ({{ contacts|length }})</h6>
-                <div class="bg-white rounded-3 border shadow-sm p-3 overflow-auto" style="max-height: 300px;">
-                    {% if contacts %}
-                        {% for contact in contacts %}
-                        <div class="d-flex justify-content-between align-items-center p-2 mb-2 bg-light rounded-3 border">
-                            <div class="d-flex flex-column">
-                                <span class="fw-bold mb-0 text-dark">{{ contact.name }} <span class="badge bg-secondary ms-1 shadow-sm">{{ contact.relation }}</span></span>
-                                <small class="text-muted"><i class="fa-solid fa-envelope me-1 text-primary"></i> {{ contact.email }}</small>
-                                <small class="text-muted"><i class="fa-solid fa-phone me-1 text-success"></i> {{ contact.phone }}</small>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    {% else %}
-                        <div class="text-center py-4 text-muted small fw-medium">No external contacts listed.</div>
-                    {% endif %}
-                </div>
+        <div class="bg-warning bg-opacity-10 p-4 border border-warning rounded-3 shadow-sm mb-4">
+            <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-clipboard-list text-warning me-2"></i> Owner's Emergency Instructions</h5>
+            <div class="bg-white p-3 rounded border">
+                <p class="mb-0 fst-italic text-dark">"If you are reading this, something has happened to me. Please use these documents to manage my estate and notify my trusted contacts below. Thank you for your help."</p>
             </div>
         </div>
-        <div class="mb-4"></div>
     </div>
+</div>
+
+<h6 class="text-uppercase fw-bold text-muted small mt-2 mb-3">DECRYPTED DOCUMENTS ({{ documents|length }})</h6>
+<div class="bg-white rounded-3 shadow-sm border mb-5 overflow-hidden">
+    <table class="table table-hover mb-0 align-middle">
+        <thead class="bg-light">
+            <tr>
+                <th class="py-3 px-4 fw-bold text-muted small">Document Type</th>
+                <th class="py-3 px-4 fw-bold text-muted small">Instructions / Notes</th>
+                <th class="py-3 px-4 text-end fw-bold text-muted small">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for doc in documents %}
+            <tr>
+                <td class="px-4 py-3 border-light fw-medium">
+                    <i class="fa-solid fa-file-contract text-primary bg-primary bg-opacity-10 p-2 rounded me-2"></i>
+                    {{ doc.doc_type }}
+                </td>
+                <td class="px-4 py-3 border-light text-muted small">
+                    {{ doc.notes or 'No notes provided' }}
+                </td>
+                <td class="px-4 py-3 border-light text-end">
+                    <button class="btn btn-sm btn-outline-primary border fw-medium px-3"><i class="fa-solid fa-download me-1"></i> Retrieve File</button>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3" class="text-center py-5 text-muted small fw-medium">No documents stored in the vault.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<h6 class="text-uppercase fw-bold text-muted small mt-2 mb-3">VERIFIED EMERGENCY CONTACTS ({{ contacts|length }})</h6>
+<div class="row g-3">
+    {% for contact in contacts %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm border p-3">
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="bg-info bg-opacity-10 text-info rounded-circle d-flex align-items-center justify-content-center fw-bold fs-5" style="width: 48px; height: 48px;">
+                    {{ contact.name[0] | upper }}
+                </div>
+                <div>
+                    <h6 class="mb-0 fw-bold">{{ contact.name }}</h6>
+                    <span class="badge bg-light text-dark fw-medium">{{ contact.relation }}</span>
+                </div>
+            </div>
+            <div class="small mt-2 text-muted">
+                <div class="mb-1"><i class="fa-solid fa-envelope me-2 text-primary"></i> <a href="mailto:{{ contact.email }}" class="text-decoration-none text-muted">{{ contact.email }}</a></div>
+                <div><i class="fa-solid fa-phone me-2 text-success"></i> <a href="tel:{{ contact.phone }}" class="text-decoration-none text-muted">{{ contact.phone }}</a></div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12">
+        <div class="p-5 text-center bg-light rounded-3 w-100 border border-dashed text-muted">No external contacts listed.</div>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}

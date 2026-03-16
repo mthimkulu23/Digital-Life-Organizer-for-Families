@@ -1,130 +1,154 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container py-4">
-    <!-- Header Section -->
-    <div class="row mb-4 align-items-center">
-        <div class="col-md-8">
-            <h2 class="fw-bold"><i class="fa-solid fa-gauge-high text-primary me-2"></i> Vault Dashboard</h2>
-            <p class="text-muted"><i class="fa-solid fa-user me-1"></i> Welcome back, <strong>{{ session['user_name'] }}</strong>. Your digital life is secure.</p>
-        </div>
-        <div class="col-md-4 text-md-end">
-            <button class="btn btn-outline-primary rounded-pill px-4 shadow-sm fw-medium shadow-sm bg-white" data-bs-toggle="modal" data-bs-target="#uploadDocModal">
-                <i class="fa-solid fa-cloud-arrow-up me-2"></i> Secure Document
+<div class="row align-items-center mb-5">
+    <div class="col-md-7 pe-lg-5">
+        <span class="tag-label">Digital Life Organizer</span>
+        <h1 class="page-title mb-4">Securing your digital life.</h1>
+        <p class="page-subtitle mb-4">
+            A secure place to store and share your most important documents, passwords, and instructions for your family. You decide who has access to it and when.
+        </p>
+        
+        <div class="d-flex gap-3 align-items-center">
+            <button class="btn btn-primary px-4 py-2 rounded-2 fw-medium shadow-sm" data-bs-toggle="modal" data-bs-target="#addContactModal">
+                Add Trusted Contact
+            </button>
+            <button class="btn btn-outline border px-4 py-2 rounded-2 bg-light text-dark fw-medium shadow-sm" data-bs-toggle="modal" data-bs-target="#uploadDocModal">
+                <i class="fa-regular fa-file-lines me-2"></i> Upload Document
             </button>
         </div>
-    </div>
-
-    <div class="row g-4 mb-4">
-        <!-- Emergency Code Section -->
-        <div class="col-md-12 col-lg-4">
-            <div class="glass-card shadow-sm h-100 p-4 border-primary border-top border-4">
-                <h5 class="fw-bold text-danger mb-3"><i class="fa-solid fa-truck-medical me-2"></i> Emergency Code</h5>
-                <p class="text-muted small">Give this code to your trusted contacts ONLY. It unlocks your vault if something happens.</p>
-                <div class="bg-dark text-info text-center py-3 px-2 rounded-3 fs-5 mb-3 position-relative d-flex justify-content-center align-items-center shadow-inner" style="font-family: monospace; letter-spacing: 2px;">
-                    <span id="emergency-code-text" class="fw-bold">{{ user.emergency_code }}</span>
-                    <i class="fa-solid fa-copy position-absolute end-0 me-3 text-secondary copy-btn fs-5" id="copy-icon" onclick="copyEmergencyCode()" title="Copy Code"></i>
-                </div>
-                <div class="p-3 bg-danger-soft rounded-3 mt-auto">
-                    <p class="mb-0 small fw-medium text-danger"><i class="fa-solid fa-triangle-exclamation me-1"></i> Keep this code extremely safe. Store it with your physical will or give it to your lawyer.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Documents Summary Section -->
-        <div class="col-md-6 col-lg-4">
-            <div class="glass-card shadow-sm h-100 p-4 pb-0 d-flex flex-column border-success border-top border-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold text-success mb-0"><i class="fa-solid fa-vault me-2"></i> Documents</h5>
-                    <span class="badge bg-success text-white px-3 py-2 rounded-pill shadow-sm fs-6">{{ documents|length }} Stored</span>
-                </div>
-                <p class="text-muted small">Your heavily encrypted files safely guarded.</p>
-                
-                <div class="mt-2 flex-grow-1 overflow-auto bg-light rounded-3 p-2 mb-4 border">
-                    {% if documents %}
-                        <ul class="list-group list-group-flush bg-transparent">
-                            {% for doc in documents %}
-                            <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-2 py-3 border-bottom border-light">
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-white p-2 rounded-circle shadow-sm me-3 text-center" style="width: 40px; height: 40px;">
-                                        <i class="fa-solid fa-file-contract text-primary fs-5"></i>
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-0 fw-bold text-truncate" style="max-width: 150px;">{{ doc.doc_type }}</h6>
-                                        <small class="text-success fw-bold"><i class="fa-solid fa-lock me-1"></i> Encrypted</small>
-                                    </div>
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <div class="empty-state">
-                            <i class="fa-solid fa-file-circle-xmark d-block mb-2"></i>
-                            <span class="small d-block fw-bold">No documents yet.</span>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        <!-- Trusted Contacts Summary -->
-        <div class="col-md-6 col-lg-4">
-            <div class="glass-card shadow-sm h-100 p-4 pb-0 d-flex flex-column border-info border-top border-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="fw-bold text-info mb-0"><i class="fa-solid fa-users-shield me-2"></i> Contacts</h5>
-                    <span class="badge bg-info text-white px-3 py-2 rounded-pill shadow-sm fs-6">{{ contacts|length }} Trusted</span>
-                </div>
-                <p class="text-muted small">People who can request emergency access.</p>
-                
-                <div class="mt-2 flex-grow-1 overflow-auto bg-light rounded-3 p-2 mb-4 border relative">
-                    {% if contacts %}
-                        <ul class="list-group list-group-flush bg-transparent">
-                            {% for contact in contacts %}
-                            <li class="list-group-item bg-transparent d-flex justify-content-between align-items-center px-2 py-3 border-bottom border-light">
-                                <div class="d-flex align-items-center">
-                                    <div class="bg-white p-2 rounded-circle shadow-sm me-3 text-center d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                        <span class="fw-bold text-primary">{{ contact.name[0] }}</span>
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-0 fw-bold">{{ contact.name }}</h6>
-                                        <small class="text-muted">{{ contact.relation }}</small>
-                                    </div>
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <div class="empty-state">
-                            <i class="fa-solid fa-user-xmark d-block mb-2"></i>
-                            <span class="small d-block fw-bold">No contacts added.</span>
-                        </div>
-                    {% endif %}
-                </div>
-                <button class="btn btn-outline-info rounded-pill w-100 mb-4 bg-white shadow-sm fw-bold" data-bs-toggle="modal" data-bs-target="#addContactModal">
-                    <i class="fa-solid fa-user-plus me-1"></i> Add Trusted Contact
+        
+        <div class="mt-4 pt-3 border-top">
+            <p class="text-muted small fw-medium text-uppercase mb-2"><i class="fa-solid fa-key me-2 text-danger"></i> Emergency Vault Access Code</p>
+            <div class="d-flex align-items-center gap-3 bg-light p-3 rounded-3 border">
+                <span class="fs-5 fw-bold font-monospace text-dark" id="emergency-code-text">{{ user.emergency_code }}</span>
+                <button class="btn btn-sm btn-outline-secondary ms-auto bg-white" onclick="copyEmergencyCode()">
+                    <i class="fa-solid fa-copy me-1"></i> Copy Code
                 </button>
+            </div>
+            <p class="small text-danger mt-2 fst-italic"><i class="fa-solid fa-circle-exclamation me-1"></i> Give this code privately to the people you trust.</p>
+        </div>
+    </div>
+    <div class="col-md-5 d-none d-md-block">
+        <div class="illustration-area shadow-sm border border-light" style="background-color: #f0f7ff; min-height: 250px;">
+            <!-- Placeholder for vector illustration mapping what the user wants -->
+            <div class="text-center text-primary opacity-50">
+                <i class="fa-solid fa-vault fa-6x mb-3 text-info"></i>
+                <h5 class="fw-bold">Encrypted Vault</h5>
             </div>
         </div>
     </div>
 </div>
 
+<div class="feature-cards mb-5 pb-3 border-bottom">
+    <div class="feature-card card shadow-sm text-center align-items-center bg-white">
+        <div class="icon bg-light rounded-circle p-3 mb-3 border text-primary" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+            <i class="fa-solid fa-globe fs-4"></i>
+        </div>
+        <h4>Online Accounts</h4>
+        <p>Decide which are the most valuable and what should happen to them.</p>
+        <button class="btn btn-light mt-auto" data-bs-toggle="modal" data-bs-target="#addAccountModal">Add Account</button>
+    </div>
+    
+    <div class="feature-card card shadow-sm text-center align-items-center bg-white">
+        <div class="icon bg-light rounded-circle p-3 mb-3 border text-success" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+            <i class="fa-solid fa-mobile-screen fs-4"></i>
+        </div>
+        <h4>Devices</h4>
+        <p>Grant access to your devices now or after you pass away.</p>
+        <button class="btn btn-light mt-auto" data-bs-toggle="modal" data-bs-target="#addDeviceModal">Add Device</button>
+    </div>
+    
+    <div class="feature-card card shadow-sm text-center align-items-center bg-white">
+        <div class="icon bg-light rounded-circle p-3 mb-3 border text-warning" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+            <i class="fa-regular fa-file-pdf fs-4"></i>
+        </div>
+        <h4>Documents</h4>
+        <p>Grant access to your documents safely when needed.</p>
+        <button class="btn btn-light mt-auto" data-bs-toggle="modal" data-bs-target="#uploadDocModal">Upload File</button>
+    </div>
+    
+    <div class="feature-card card shadow-sm text-center align-items-center bg-white">
+        <div class="icon bg-light rounded-circle p-3 mb-3 border text-info" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+            <i class="fa-solid fa-users-viewfinder fs-4"></i>
+        </div>
+        <h4>Trusted Contacts</h4>
+        <p>A wonderful act to make sure your loved ones are safe.</p>
+        <button class="btn btn-light mt-auto" data-bs-toggle="modal" data-bs-target="#addContactModal">Add Contact</button>
+    </div>
+</div>
+
+<h6 class="text-uppercase fw-bold text-muted small mt-5 mb-3">YOUR UPLOADED DOCUMENTS & CONTACTS</h6>
+<div class="item-cards">
+    {% for doc in documents %}
+    <div class="item-card card shadow-sm border">
+        <div class="item-card-header">
+            <div class="item-icon bg-success bg-opacity-10 text-success">
+                <i class="fa-solid fa-file-contract"></i>
+            </div>
+            <div>
+                <span class="d-block">{{ doc.doc_type }}</span>
+            </div>
+        </div>
+        
+        <div class="status-text status-complete fw-medium">
+            <i class="fa-solid fa-check-circle"></i> Successfully Encrypted
+        </div>
+        
+        <div class="item-footer border-top pt-3 mt-3">
+            <span>{{ doc.notes[:30] if doc.notes else "No specific instructions" }}...</span>
+            <span class="badge bg-light text-dark shadow-sm">Secured</span>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% for contact in contacts %}
+    <div class="item-card card shadow-sm border">
+        <div class="item-card-header">
+            <div class="item-icon bg-info bg-opacity-10 text-info">
+                {{ contact.name[0] | upper }}
+            </div>
+            <div>
+                <span class="d-block">{{ contact.name }}</span>
+            </div>
+        </div>
+        
+        <div class="status-text status-complete fw-medium text-primary">
+            <i class="fa-solid fa-user-shield"></i> {{ contact.relation }}
+        </div>
+        
+        <div class="item-footer border-top pt-3 mt-3">
+            <span>Ready for Emergency Access</span>
+            <span class="badge bg-light text-primary shadow-sm"><i class="fa-solid fa-envelope"></i> Active</span>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% if not documents and not contacts %}
+    <div class="p-5 text-center bg-light rounded-3 w-100 border border-dashed border-2">
+        <i class="fa-solid fa-box-open fs-1 text-muted mb-3"></i>
+        <h5 class="fw-bold">Your vault is empty</h5>
+        <p class="text-muted">Start adding accounts, documents, or trusted contacts above.</p>
+    </div>
+    {% endif %}
+</div>
+
+
+<!-- Modals (kept identical behind the scenes for functionality) -->
 <!-- Upload Document Modal -->
 <div class="modal fade" id="uploadDocModal" tabindex="-1" aria-labelledby="uploadDocModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content glass-card p-2 border-0 shadow-lg">
+        <div class="modal-content border-0 shadow-lg form-control p-3">
             <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title fw-bold" id="uploadDocModalLabel"><i class="fa-solid fa-cloud-arrow-up text-primary me-2"></i> Secure a Document</h5>
+                <h5 class="modal-title fw-bold text-primary" id="uploadDocModalLabel"><i class="fa-solid fa-cloud-arrow-up me-2"></i> Upload Document</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="bg-primary-soft p-3 rounded-3 mb-4 border d-flex">
-                    <i class="fa-solid fa-lock text-primary fs-3 mt-1 me-3"></i>
-                    <p class="small mb-0 text-muted">Files uploaded here are instantly encrypted before storage. Only those with emergency access can view them.</p>
-                </div>
+                <p class="small text-muted mb-4">Files uploaded here are instantly encrypted before storage.</p>
                 <form action="{{ url_for('upload_document') }}" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <label for="doc_type" class="form-label small text-muted text-uppercase fw-bold">Document Type</label>
-                        <select class="form-select bg-light border" id="doc_type" name="doc_type" required>
+                        <label class="form-label small fw-bold">Document Type</label>
+                        <select class="form-select bg-light border" name="doc_type" required>
                             <option value="Life Insurance">Life Insurance</option>
                             <option value="Funeral Policy">Funeral Policy</option>
                             <option value="Last Will & Testament">Last Will & Testament</option>
@@ -135,14 +159,14 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="notes" class="form-label small text-muted text-uppercase fw-bold">Emergency Instructions (Optional)</label>
-                        <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="If I pass away, please call..."></textarea>
+                        <label class="form-label small fw-bold">Instructions (Optional)</label>
+                        <textarea class="form-control" name="notes" rows="3" placeholder="If I pass away, please call..."></textarea>
                     </div>
                     <div class="mb-4">
-                        <label for="file" class="form-label small text-muted text-uppercase fw-bold">Select File</label>
-                        <input class="form-control form-control-lg bg-light" type="file" id="file" name="file" required>
+                        <label class="form-label small fw-bold">Select File</label>
+                        <input class="form-control" type="file" name="file" required>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill fw-medium fs-5"><i class="fa-solid fa-lock me-2"></i> Encrypt & Store</button>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-medium">Encrypt & Store in Vault</button>
                 </form>
             </div>
         </div>
@@ -152,39 +176,117 @@
 <!-- Add Contact Modal -->
 <div class="modal fade" id="addContactModal" tabindex="-1" aria-labelledby="addContactModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content glass-card p-2 border-0 shadow-lg">
+        <div class="modal-content border-0 shadow-lg form-control p-3">
             <div class="modal-header border-0 pb-0">
-                <h5 class="modal-title fw-bold" id="addContactModalLabel"><i class="fa-solid fa-user-plus text-info me-2"></i> Add Trusted Contact</h5>
+                <h5 class="modal-title fw-bold text-primary" id="addContactModalLabel"><i class="fa-solid fa-user-plus me-2"></i> Add Trusted Contact</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p class="text-muted small mb-4">Add people you trust completely. They will need the emergency code to access your vault.</p>
                 <form action="{{ url_for('add_contact') }}" method="POST">
                     <div class="mb-3">
-                        <label for="contact_name" class="form-label small text-muted text-uppercase fw-bold"><i class="fa-solid fa-user me-1"></i> Full Name</label>
-                        <input type="text" class="form-control" id="contact_name" name="name" required>
+                        <label class="form-label small fw-bold">Full Name</label>
+                        <input type="text" class="form-control" name="name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="relation" class="form-label small text-muted text-uppercase fw-bold"><i class="fa-solid fa-users me-1"></i> Relationship</label>
-                        <select class="form-select bg-light border" id="relation" name="relation" required>
+                        <label class="form-label small fw-bold">Relationship</label>
+                        <select class="form-select bg-light border" name="relation" required>
                             <option value="Spouse">Spouse</option>
                             <option value="Parent">Parent</option>
                             <option value="Sibling">Sibling</option>
                             <option value="Child">Child</option>
                             <option value="Lawyer">Lawyer</option>
-                            <option value="Close Friend">Close Friend</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="contact_email" class="form-label small text-muted text-uppercase fw-bold"><i class="fa-solid fa-envelope me-1"></i> Email</label>
-                        <input type="email" class="form-control" id="contact_email" name="email" required>
+                        <label class="form-label small fw-bold">Email</label>
+                        <input type="email" class="form-control" name="email" required>
                     </div>
                     <div class="mb-4">
-                        <label for="phone" class="form-label small text-muted text-uppercase fw-bold"><i class="fa-solid fa-phone me-1"></i> Phone Number</label>
-                        <input type="text" class="form-control" id="phone" name="phone" required>
+                        <label class="form-label small fw-bold">Phone Number</label>
+                        <input type="text" class="form-control" name="phone" required>
                     </div>
-                    <button type="submit" class="btn btn-info text-white w-100 py-2 rounded-pill fw-medium shadow-sm fs-5"><i class="fa-solid fa-check me-2"></i> Add Contact</button>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-medium">Add Contact</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Device Modal -->
+<div class="modal fade" id="addDeviceModal" tabindex="-1" aria-labelledby="addDeviceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg p-3">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-success" id="addDeviceModalLabel"><i class="fa-solid fa-mobile-screen me-2"></i> Add Device</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="small text-muted mb-4">Register a device so trusted contacts know what belongs to you and what your wishes are for it.</p>
+                <form action="{{ url_for('add_device') }}" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Device Name</label>
+                        <input type="text" class="form-control" name="device_name" placeholder="e.g. iPhone 15 Pro, MacBook Air" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Device Type</label>
+                        <select class="form-select" name="device_type" required>
+                            <option value="Phone">Phone</option>
+                            <option value="Laptop">Laptop / Computer</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="External Drive">External Hard Drive</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">PIN / Password (optional)</label>
+                        <input type="text" class="form-control" name="device_pin" placeholder="Device unlock code (stored encrypted)">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Instructions for Family</label>
+                        <textarea class="form-control" name="notes" rows="3" placeholder="e.g. Give this phone to my daughter Sarah..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100 py-2 fw-medium">Register Device</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Online Account Modal -->
+<div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg p-3">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-primary" id="addAccountModalLabel"><i class="fa-solid fa-globe me-2"></i> Add Online Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="small text-muted mb-4">Store important online account credentials so your family can access or close them on your behalf.</p>
+                <form action="{{ url_for('add_account') }}" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Platform / Service</label>
+                        <input type="text" class="form-control" name="platform" placeholder="e.g. Gmail, Facebook, Netflix" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Username / Email</label>
+                        <input type="text" class="form-control" name="username" placeholder="account@email.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Password (optional)</label>
+                        <input type="text" class="form-control" name="password" placeholder="Stored encrypted">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Wish for this account</label>
+                        <select class="form-select" name="wish" required>
+                            <option value="Delete account">Delete account after I pass</option>
+                            <option value="Give access to family">Give access to family</option>
+                            <option value="Keep active">Keep active</option>
+                            <option value="Memorialize">Memorialize (e.g. Facebook)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-medium">Save Account</button>
                 </form>
             </div>
         </div>

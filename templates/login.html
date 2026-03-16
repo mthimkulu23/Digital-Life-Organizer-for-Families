@@ -1,27 +1,25 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<div class="container d-flex justify-content-center pt-5">
-    <div class="glass-card shadow-lg auth-card w-100 p-5 mt-4">
-        <div class="text-center mb-4">
-            <h2 class="fw-bold"><i class="fa-solid fa-lock text-primary me-2"></i> Access Vault</h2>
-            <p class="text-muted small">Login to manage your stored documents.</p>
-        </div>
+{% block public_content %}
+<div class="auth-wrapper">
+    <div class="auth-panel text-center">
+        <h2 class="mb-2 text-dark">Welcome back</h2>
+        <p class="text-muted small mb-4">Log in to your Digital Life Organizer to manage your vault.</p>
         
-        <form action="{{ url_for('login') }}" method="POST">
+        <form action="{{ url_for('login') }}" method="POST" class="text-start">
             <div class="mb-3">
-                <label for="email" class="form-label small text-muted text-uppercase fw-bold"><i class="fa-solid fa-envelope me-1"></i> Email address</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="john@example.com" required>
+                <label class="form-label text-muted">Email address</label>
+                <input type="email" class="form-control" name="email" placeholder="john@example.com" required>
             </div>
             <div class="mb-4">
-                <label for="password" class="form-label small text-muted text-uppercase fw-bold"><i class="fa-solid fa-key me-1"></i> Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
+                <label class="form-label text-muted">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="btn btn-primary w-100 py-2 fw-medium rounded-pill fs-5"><i class="fa-solid fa-arrow-right-to-bracket me-2"></i> Login to Vault</button>
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-medium fs-5 text-white">Log In</button>
         </form>
         
-        <div class="text-center mt-4 border-top pt-3">
-            <p class="text-muted small mb-0">Don't have a vault yet? <a href="{{ url_for('register') }}" class="text-decoration-none fw-bold text-primary">Create one securely</a></p>
+        <div class="mt-4 pt-3 border-top">
+            <p class="text-muted small mb-0">Don't have an account? <a href="{{ url_for('register') }}" class="text-decoration-none fw-bold" style="color: var(--primary-blue);">Sign up for free</a></p>
         </div>
     </div>
 </div>

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block public_content %}
+<div class="container py-5 mt-5">
+    <div class="text-center mb-5 pb-4">
+        <span class="tag-label">Pricing</span>
+        <h2 class="fw-bold fs-1">Simple pricing for complex lives</h2>
+        <p class="text-muted mx-auto mt-3" style="max-width: 600px;">
+            Start securing your legacy today for free. Upgrade whenever your family needs grow.
+        </p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        <!-- Free Tier -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card h-100 border-0 shadow-sm p-4 rounded-4" style="background-color: #f8fafc;">
+                <div class="mb-4">
+                    <h4 class="fw-bold mb-2">Basic Starter</h4>
+                    <div class="d-flex align-items-end gap-1 mb-3">
+                        <span class="display-5 fw-bold">$0</span>
+                        <span class="text-muted mb-2">/ forever</span>
+                    </div>
+                    <p class="text-muted small">For single individuals who need to store basic emergency info.</p>
+                </div>
+                
+                <ul class="list-unstyled mb-4 flex-grow-1">
+                    <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> 1 Trusted Contact</li>
+                    <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> 5 Document Uploads</li>
+                    <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> Standard Encryption</li>
+                    <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> 1 Emergency Code</li>
+                </ul>
+                
+                <a href="{{ url_for('register') }}" class="btn btn-outline-primary w-100 fw-medium py-2 rounded-pill">Start for Free</a>
+            </div>
+        </div>
+        
+        <!-- Premium Tier -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card h-100 border-primary shadow-lg p-4 rounded-4 position-relative" style="border-width: 2px;">
+                <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary px-3 py-2">Most Popular</span>
+                <div class="mb-4 mt-2">
+                    <h4 class="fw-bold mb-2">Family Plan</h4>
+                    <div class="d-flex align-items-end gap-1 mb-3">
+                        <span class="display-5 fw-bold">$4</span>
+                        <span class="text-muted mb-2">/ month</span>
+                    </div>
+                    <p class="text-muted small">Everything you need to protect an entire household.</p>
+                </div>
+                
+                <ul class="list-unstyled mb-4 flex-grow-1">
+                    <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> Unlimited Contacts</li>
+                    <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> Unlimited Documents</li>
+                    <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> Active Life Stories</li>
+                    <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> Military-grade Encryption</li>
+                    <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> Custom Estate Plans</li>
+                </ul>
+                
+                <a href="{{ url_for('register') }}" class="btn btn-primary w-100 fw-medium py-2 rounded-pill shadow-sm">Get Started</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block public_content %}
+<div class="container py-5 mt-5">
+    <div class="text-center mb-5">
+        <span class="tag-label">Help Center</span>
+        <h2 class="fw-bold fs-1">How can we help?</h2>
+        <p class="text-muted mx-auto mt-3" style="max-width: 600px;">Find answers to common questions about the Digital Life Organizer.</p>
+    </div>
+
+    <div class="row g-5">
+        <div class="col-lg-8 mx-auto">
+            <!-- FAQ Accordion -->
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item border-0 shadow-sm mb-3 rounded-3 overflow-hidden">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            <i class="fa-solid fa-user-plus text-primary me-3"></i> How do I add a trusted contact?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted small">
+                            After logging in, go to your <strong>Dashboard</strong> and click "Add Trusted Contact". Fill in their name, relationship, email, and phone. Once added, they will receive a notification to confirm — but they can only access your vault using your emergency code.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 shadow-sm mb-3 rounded-3 overflow-hidden">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            <i class="fa-solid fa-file-arrow-up text-warning me-3"></i> How do I upload documents?
+                        </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted small">
+                            Go to your <strong>Dashboard</strong> and click "Upload Document" or click the "Upload File" card. Select the document type (e.g. Life Insurance, Last Will), add special instructions, and attach the file. It is immediately encrypted on upload.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 shadow-sm mb-3 rounded-3 overflow-hidden">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                            <i class="fa-solid fa-key text-danger me-3"></i> What is the Emergency Code?
+                        </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted small">
+                            Your Emergency Code is a unique 12-character code generated when you register. Store it in a safe place (e.g., written in a sealed envelope with your physical documents). When someone presents this code on the Emergency Access page, they will be granted read-only view of your vault.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 shadow-sm mb-3 rounded-3 overflow-hidden">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                            <i class="fa-solid fa-lock text-success me-3"></i> How is my data protected?
+                        </button>
+                    </h2>
+                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted small">
+                            Your data is protected with multiple layers of security. All passwords are hashed using industry-standard algorithms. Document files are encrypted at rest. Access is restricted by session-based authentication and only unlocks through the emergency code pathway.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0 shadow-sm mb-3 rounded-3 overflow-hidden">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button fw-semibold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                            <i class="fa-solid fa-shield-halved text-info me-3"></i> Who can access my vault?
+                        </button>
+                    </h2>
+                    <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-muted small">
+                            Only you can access your vault under normal circumstances. Trusted contacts you have added can only gain read-only access by entering your emergency code on the Emergency Access page — no one else can bypass this gate.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Support -->
+            <div class="card border-0 shadow-sm p-5 mt-5 rounded-4">
+                <h4 class="fw-bold mb-2">Still need help?</h4>
+                <p class="text-muted small mb-4">Send us a message and our team will respond within 24 hours.</p>
+                <form>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Email Address" required>
+                    </div>
+                    <div class="mb-4">
+                        <textarea class="form-control" rows="4" placeholder="Describe your issue..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary fw-medium px-5">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

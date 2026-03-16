@@ -1,111 +1,123 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<div class="hero-section">
-    <div class="container relative z-10">
-        <div class="row align-items-center">
-            <div class="col-lg-6 text-start mb-5 mb-lg-0">
-                <div class="d-inline-flex align-items-center bg-white shadow-sm rounded-pill px-3 py-2 mb-4">
-                    <span class="badge bg-primary-soft me-2 rounded-pill"><i class="fa-solid fa-star"></i> Featured Idea</span>
-                    <span class="text-muted small fw-medium">The ultimate safety net for your family.</span>
-                </div>
-                <h1 class="hero-title">Your Family's <span class="text-gradient">Digital Safety Vault</span></h1>
-                <p class="hero-subtitle text-start ps-0 ms-0">When the unexpected happens, don't let your family struggle to find important documents, passwords, or instructions. Store them securely and grant access only when it matters most.</p>
-                <div class="d-flex flex-wrap gap-3">
-                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-medium shadow-lg"><i class="fa-solid fa-shield-halved me-2"></i> Create Your Vault</a>
-                    <a href="#how-it-works" class="btn btn-light btn-lg rounded-pill px-5 fw-medium border shadow-sm text-dark bg-white">How it Works</a>
-                </div>
-                
-                <div class="mt-5 d-flex align-items-center gap-4 border-top pt-4">
-                    <div>
-                        <h4 class="fw-bold mb-0">100%</h4>
-                        <span class="text-muted small">Encrypted Platform</span>
-                    </div>
-                    <div class="border-start ps-4">
-                        <h4 class="fw-bold mb-0">Zero</h4>
-                        <span class="text-muted small">Knowledge Access</span>
-                    </div>
-                </div>
+{% block public_content %}
+<div class="container py-5 mt-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-lg-6 text-start pe-lg-5 mb-5 mb-lg-0">
+            <span class="tag-label">Digital Life Organizer</span>
+            <h1 class="display-4 fw-bold mb-4" style="color: var(--text-dark); letter-spacing: -1px;">
+                Secure your digital life. Protect your family.
+            </h1>
+            <p class="lead text-muted mb-5">
+                When the unexpected happens, don't let your family struggle to find important documents, passwords, or instructions. Store them securely and grant access only when it matters most.
+            </p>
+            
+            <div class="d-flex flex-wrap gap-3 mb-4">
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-medium"><i class="fa-solid fa-cloud-arrow-up me-2"></i> Start for free</a>
+                <a href="#how-it-works" class="btn btn-outline btn-lg rounded-pill px-5 fw-medium bg-white">How it works?</a>
             </div>
-            <div class="col-lg-6 position-relative">
-                <div class="glass-card shadow-lg position-relative z-1">
-                    <div class="d-flex align-items-center mb-4 border-bottom pb-3">
-                        <div class="bg-primary-soft rounded-circle p-3 me-3 feature-icon d-flex align-items-center justify-content-center">
-                            <i class="fa-solid fa-lock text-primary fs-3"></i>
-                        </div>
-                        <div>
-                            <h5 class="fw-bold mb-1">Encrypted Vault Status</h5>
-                            <span class="text-success small fw-medium"><i class="fa-solid fa-circle-check me-1"></i> Secured & Active</span>
+            
+            <div class="d-flex align-items-center gap-2 mt-4 text-muted small fw-medium">
+                <i class="fa-solid fa-lock text-primary"></i> 256-bit Encryption
+                <span class="mx-2">|</span>
+                <i class="fa-solid fa-eye-slash text-success"></i> Zero Knowledge Access
+            </div>
+        </div>
+        
+        <div class="col-lg-6 position-relative d-flex align-items-center justify-content-center" style="min-height: 500px;">
+            <!-- Rotating Particles System (Counter-Clockwise) behind the card -->
+            <div class="particles-container" style="animation: spinSlowly 40s linear infinite reverse;">
+                <div class="particle particle-blue" style="width: 8px; height: 8px; top: -10%; left: 10%; animation: pulseParticle 3s infinite;"></div>
+                <div class="particle particle-red" style="width: 6px; height: 6px; top: -5%; right: 15%; animation: pulseParticle 4s infinite 1s;"></div>
+                <div class="particle particle-yellow" style="width: 10px; height: 10px; top: 40%; left: -20%; animation: pulseParticle 5s infinite 2s;"></div>
+                <div class="particle particle-green" style="width: 7px; height: 7px; bottom: 10%; right: -10%; animation: pulseParticle 3.5s infinite 0.5s;"></div>
+                <div class="particle particle-gray" style="width: 9px; height: 9px; bottom: -25%; left: 30%; animation: pulseParticle 4.5s infinite 1.5s;"></div>
+                <div class="particle particle-blue" style="width: 5px; height: 5px; top: 5%; right: 40%; animation: pulseParticle 3s infinite 2.5s;"></div>
+                <div class="particle particle-red" style="width: 8px; height: 8px; bottom: -5%; right: 45%; animation: pulseParticle 4s infinite 0.8s;"></div>
+                <div class="particle particle-yellow" style="width: 6px; height: 6px; top: 50%; right: -25%; animation: pulseParticle 5s infinite 3s;"></div>
+                <div class="particle particle-green" style="width: 10px; height: 10px; bottom: 25%; left: -15%; animation: pulseParticle 3.5s infinite 1.2s;"></div>
+                <div class="particle particle-gray" style="width: 7px; height: 7px; top: 120%; right: 20%; animation: pulseParticle 4.5s infinite 0.3s;"></div>
+                <div class="particle particle-blue" style="width: 9px; height: 9px; top: -25%; left: 85%; animation: pulseParticle 3s infinite 1.7s;"></div>
+                <div class="particle particle-yellow" style="width: 5px; height: 5px; top: 75%; left: -10%; animation: pulseParticle 5s infinite 2.2s;"></div>
+            </div>
+
+            <!-- Animated Glowing Background Wrapper -->
+            <div class="position-relative p-1 rounded-4 w-100" style="background: linear-gradient(0deg, #3b82f6, #10b981, #3b82f6); background-size: 200% 200%; border-radius: 18px; z-index: 2; max-width: 450px;">
+                <!-- Inner Card -->
+                <div class="card p-4 p-md-5 border-0 bg-white h-100 w-100" style="border-radius: 16px; position: relative; z-index: 1;">
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-4 mb-4">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <i class="fa-solid fa-shield-halved fs-4"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-0 fw-bold">Active Encryption</h5>
+                                <small class="text-success"><i class="fa-solid fa-circle-check"></i> 100% Secured</small>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="mb-4">
-                        <p class="text-muted small fw-bold text-uppercase tracking-wide mb-2">Stored Assets</p>
-                        <div class="bg-light p-3 rounded-3 d-flex justify-content-between align-items-center mb-2 border">
-                            <div class="d-flex align-items-center">
-                                <i class="fa-solid fa-file-contract text-primary me-3 fs-5"></i>
-                                <span class="fw-medium">Life Insurance Policy</span>
-                            </div>
-                            <span class="badge bg-success-soft"><i class="fa-solid fa-check"></i> Encrypted</span>
-                        </div>
-                        <div class="bg-light p-3 rounded-3 d-flex justify-content-between align-items-center mb-2 border">
-                            <div class="d-flex align-items-center">
-                                <i class="fa-solid fa-book-open text-warning me-3 fs-5"></i>
-                                <span class="fw-medium">Last Will & Testament</span>
-                            </div>
-                            <span class="badge bg-success-soft"><i class="fa-solid fa-check"></i> Encrypted</span>
-                        </div>
-                    </div>
-                    
-                    <div class="text-center mt-4">
-                        <div class="emergency-code-box py-3 fs-4 d-inline-block px-4 mb-2 shadow-sm text-info bg-dark" style="font-family: monospace;">
+                    <div class="bg-light rounded-3 p-4 mb-4 text-center border position-relative overflow-hidden">
+                        <p class="small text-muted text-uppercase fw-bold mb-3">Your Emergency Passcode</p>
+                        <div class="fs-4 font-monospace fw-bold text-dark px-3 py-2 bg-white rounded shadow-sm border mx-auto" style="max-width: fit-content; position: relative; z-index: 2;">
                             7H9X-KP22-LM84
                         </div>
-                        <p class="small text-muted mb-0"><i class="fa-solid fa-circle-info me-1"></i> Emergency Access Code Example</p>
+                        <div class="position-absolute rounded-circle bg-warning opacity-25" style="width: 150px; height: 150px; top: -50px; right: -50px; filter: blur(30px);"></div>
+                    </div>
+                    
+                    <div class="d-grid gap-3">
+                        <div class="d-flex justify-content-between align-items-center p-3 rounded-2 border bg-white shadow-sm transition-hover">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="fa-solid fa-file-contract text-primary fs-5"></i>
+                                <span class="fw-medium">Life Insurance Policy</span>
+                            </div>
+                            <i class="fa-solid fa-lock text-success"></i>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center p-3 rounded-2 border bg-white shadow-sm transition-hover">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="fa-solid fa-users text-primary fs-5"></i>
+                                <span class="fw-medium">Emergency Contacts</span>
+                            </div>
+                            <i class="fa-solid fa-lock text-success"></i>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Decorative Elements -->
-                <div class="position-absolute bg-primary rounded-circle blur-3xl opacity-20" style="width: 300px; height: 300px; top: -50px; right: -50px; z-index: 0; filter: blur(60px);"></div>
-                <div class="position-absolute bg-success rounded-circle blur-3xl opacity-20" style="width: 250px; height: 250px; bottom: -50px; left: -20px; z-index: 0; filter: blur(60px);"></div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="how-it-works" class="container py-5 mt-5 border-top border-light">
-    <div class="text-center mb-5">
-        <span class="text-primary fw-bold text-uppercase small tracking-wide"><i class="fa-solid fa-layer-group me-1"></i> The Problem We Solve</span>
-        <h2 class="fw-bold mt-2 display-6">Families shouldn't struggle during hard times.</h2>
-        <p class="lead text-muted mx-auto mt-3" style="max-width: 600px;">Everything is scattered across banks, emails, and physical files. Centralize it securely so they know exactly what to do.</p>
-    </div>
-    
-    <div class="row g-5">
-        <div class="col-md-4">
-            <div class="glass-card h-100 text-center">
-                <div class="feature-icon-wrapper bg-primary-soft mx-auto shadow-sm">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                </div>
-                <h4 class="fw-bold mt-4">1. Store Securely</h4>
-                <p class="text-muted mt-3">Upload insurance policies, funeral plans, property documents, and important family instructions into an encrypted vault.</p>
-            </div>
+<div id="how-it-works" class="bg-light border-top" style="padding: 6rem 0;">
+    <div class="container">
+        <div class="text-center mb-5 pb-4">
+            <span class="tag-label">The Solution</span>
+            <h2 class="fw-bold fs-1">How Digital Life Organizer works</h2>
+            <p class="text-muted mx-auto mt-3" style="max-width: 600px;">
+                Centralize your offline and online presence securely so your family knows exactly what to do when you cannot be there for them.
+            </p>
         </div>
-        <div class="col-md-4">
-            <div class="glass-card h-100 text-center">
-                <div class="feature-icon-wrapper bg-success-soft mx-auto shadow-sm">
-                    <i class="fa-solid fa-users"></i>
+        
+        <div class="row g-5">
+            <div class="col-md-4 text-center">
+                <div class="bg-white rounded-circle shadow-sm border d-flex align-items-center justify-content-center mx-auto mb-4 text-primary" style="width: 80px; height: 80px;">
+                    <i class="fa-solid fa-folder-open fs-2"></i>
                 </div>
-                <h4 class="fw-bold mt-4">2. Add Trusted Contacts</h4>
-                <p class="text-muted mt-3">Select your spouse, parents, siblings, or lawyer as trusted contacts. They won't see anything until an emergency happens.</p>
+                <h4 class="fw-bold mb-3">1. Upload Security</h4>
+                <p class="text-muted">Upload wills, testaments, bank instructions, and notes safely into an encrypted ecosystem.</p>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="glass-card h-100 text-center">
-                <div class="feature-icon-wrapper bg-danger-soft mx-auto shadow-sm pulse-icon text-danger">
-                    <i class="fa-solid fa-truck-medical"></i>
+            <div class="col-md-4 text-center">
+                <div class="bg-white rounded-circle shadow-sm border d-flex align-items-center justify-content-center mx-auto mb-4 text-success" style="width: 80px; height: 80px;">
+                    <i class="fa-solid fa-users fs-2"></i>
                 </div>
-                <h4 class="fw-bold mt-4">3. Emergency Access</h4>
-                <p class="text-muted mt-3">In case of death or severe illness, your family uses a secure emergency code to unlock access and follow your instructions.</p>
+                <h4 class="fw-bold mb-3">2. Trusted Members</h4>
+                <p class="text-muted">Assign a spouse, lawyer, or child. They get zero access until an emergency code is presented.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="bg-white rounded-circle shadow-sm border d-flex align-items-center justify-content-center mx-auto mb-4 text-danger" style="width: 80px; height: 80px;">
+                    <i class="fa-solid fa-truck-medical fs-2"></i>
+                </div>
+                <h4 class="fw-bold mb-3">3. Emergency Action</h4>
+                <p class="text-muted">In catastrophic events, families insert your given passcode to unlock and execute your wishes.</p>
             </div>
         </div>
     </div>

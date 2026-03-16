@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row align-items-center mb-5">
+    <div class="col">
+        <h1 class="page-title mb-2">Account Settings</h1>
+        <p class="page-subtitle mb-0">Manage your profile, password, and security preferences.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Profile Info -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm p-4 rounded-3 h-100">
+            <h5 class="fw-bold mb-4"><i class="fa-solid fa-user-circle text-primary me-2"></i> Profile Information</h5>
+            <form action="{{ url_for('update_profile') }}" method="POST">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-muted">Full Name</label>
+                    <input type="text" class="form-control" name="name" value="{{ user.name }}" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-muted">Email Address</label>
+                    <input type="email" class="form-control" name="email" value="{{ user.email }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary fw-medium px-4">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Change Password -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm p-4 rounded-3 h-100">
+            <h5 class="fw-bold mb-4"><i class="fa-solid fa-lock text-warning me-2"></i> Change Password</h5>
+            <form action="{{ url_for('change_password') }}" method="POST">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-muted">Current Password</label>
+                    <input type="password" class="form-control" name="current_password" placeholder="••••••••" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-muted">New Password</label>
+                    <input type="password" class="form-control" name="new_password" placeholder="••••••••" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-muted">Confirm New Password</label>
+                    <input type="password" class="form-control" name="confirm_password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-warning fw-medium px-4 text-dark">Update Password</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Emergency Code -->
+    <div class="col-12">
+        <div class="card border-0 shadow-sm p-4 rounded-3">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                <div>
+                    <h5 class="fw-bold mb-1"><i class="fa-solid fa-key text-danger me-2"></i> Emergency Access Code</h5>
+                    <p class="text-muted small mb-0">This is the code trusted contacts use to unlock your vault. Store it safely.</p>
+                </div>
+                <div class="d-flex align-items-center bg-light border rounded-3 px-4 py-3 gap-3">
+                    <span class="font-monospace fw-bold fs-5 text-dark" id="settings-code">{{ user.emergency_code }}</span>
+                    <button onclick="navigator.clipboard.writeText('{{ user.emergency_code }}')" class="btn btn-sm btn-outline-secondary">
+                        <i class="fa-solid fa-copy"></i> Copy
+                    </button>
+                </div>
+            </div>
+            <div class="mt-3 border-top pt-3">
+                <form action="{{ url_for('regenerate_code') }}" method="POST" onsubmit="return confirm('Regenerating the code makes the current code invalid. Trusted contacts will need the new code. Proceed?')">
+                    <button type="submit" class="btn btn-outline-danger btn-sm fw-medium">
+                        <i class="fa-solid fa-arrows-rotate me-1"></i> Generate New Emergency Code
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="col-12">
+        <div class="card border-danger shadow-sm p-4 rounded-3" style="border-width: 2px !important;">
+            <h5 class="fw-bold mb-2 text-danger"><i class="fa-solid fa-triangle-exclamation me-2"></i> Danger Zone</h5>
+            <p class="text-muted small mb-3">Deleting your account is permanent and cannot be undone. All documents and contacts will be lost.</p>
+            <button class="btn btn-outline-danger btn-sm fw-medium">Delete My Account</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
