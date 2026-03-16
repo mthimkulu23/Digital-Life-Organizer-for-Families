@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block public_content %}
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <span class="tag-label text-success">Commitment to Security</span>
+            <h1 class="page-title mb-4">Privacy Policy</h1>
+            <p class="text-muted mb-5">Your privacy is fundamental to our service design.</p>
+
+            <div class="bg-white p-5 rounded-4 shadow-sm border mb-4">
+                <h4 class="fw-bold mb-3">1. Information Collection & Encryption</h4>
+                <p class="text-muted mb-4">We collect an email address and billing details to administer your account. All other vault data (documents, passwords, wishes, trusted contact data) is encrypted end-to-end. We cannot read, scan, or access your vault contents.</p>
+
+                <h4 class="fw-bold mb-3">2. Data Usage</h4>
+                <p class="text-muted mb-4">We only process your non-encrypted basic account data to provide support, run security updates, and enforce account limitations related to the free and family plans.</p>
+
+                <h4 class="fw-bold mb-3">3. Trusted Contacts & Emergency Unlocking</h4>
+                <p class="text-muted mb-4">When an emergency code is presented by a designated contact, they gain access to the decrypted segments of your account as per your settings. It is your responsibility to share emergency codes securely off-platform.</p>
+
+                <h4 class="fw-bold mb-3">4. Data Deletion</h4>
+                <p class="text-muted mb-4">You have the right to request full account deletion at any time. When deleted, all associated identifying and vault data is permanently purged from our servers.</p>
+
+                <h4 class="fw-bold mb-3">5. Third-Party Sharing</h4>
+                <p class="text-muted mb-0">We do not sell, rent, or trade your personal information. We may share billing data strictly with our secure payment processing partner.</p>
+            </div>
+            
+            <div class="text-center">
+                <a href="{{ url_for('home') }}" class="btn btn-outline-success rounded-pill px-4">Return Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

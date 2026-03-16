@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block public_content %}
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <span class="tag-label text-info">Data Control</span>
+            <h1 class="page-title mb-4">Cookie Policy</h1>
+            <p class="text-muted mb-5">How we use small text files to run this application safely.</p>
+
+            <div class="bg-white p-5 rounded-4 shadow-sm border mb-4">
+                <h4 class="fw-bold mb-3">1. Necessary Authentication Cookies</h4>
+                <p class="text-muted mb-4">We employ secure session cookies strictly for maintaining user authentication state while logged into the app dashboard. These are mandatory for the service to function.</p>
+
+                <h4 class="fw-bold mb-3">2. Analytics & Tracking</h4>
+                <p class="text-muted mb-4">We currently do not implement cross-site tracking, remarketing cookies, or aggressive analytics pixels that could compromise your privacy while managing sensitive estate data.</p>
+
+                <h4 class="fw-bold mb-3">3. Cookie Lifespan</h4>
+                <p class="text-muted mb-4">Session keys are destroyed immediately upon logging out or closing your browser. They are not stored persistently.</p>
+
+                <h4 class="fw-bold mb-3">4. Managing Cookies</h4>
+                <p class="text-muted mb-4">You can set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. If you disable or refuse cookies, please note that the main dashboard and login features will become inaccessible.</p>
+
+                <div class="alert alert-info border-0 rounded-3 small">
+                    <i class="fa-solid fa-cookie-bite text-primary me-2"></i> Because we value your privacy, we automatically opt you out of all non-essential cookies by default.
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="{{ url_for('home') }}" class="btn btn-outline-info rounded-pill px-4">Return Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

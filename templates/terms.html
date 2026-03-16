@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block public_content %}
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <span class="tag-label text-primary">Legal Documentation</span>
+            <h1 class="page-title mb-4">Terms of Service</h1>
+            <p class="text-muted mb-5">Last updated: March 2026</p>
+
+            <div class="bg-white p-5 rounded-4 shadow-sm border mb-4">
+                <h4 class="fw-bold mb-3">1. Agreement to Terms</h4>
+                <p class="text-muted mb-4">By accessing our website and using our services, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, then you may not access the service.</p>
+
+                <h4 class="fw-bold mb-3">2. Service Description</h4>
+                <p class="text-muted mb-4">Digital Life Organizer provides a secure vault for storing sensitive documents, passwords, and instructions for designated trusted contacts to access in the event of an emergency or incapacitation.</p>
+
+                <h4 class="fw-bold mb-3">3. User Responsibilities</h4>
+                <ul class="text-muted mb-4">
+                    <li class="mb-2">You must provide accurate and complete information during registration.</li>
+                    <li class="mb-2">You are responsible for safeguarding your master password and emergency code.</li>
+                    <li class="mb-2">You must not upload illegal or unauthorized content to your vault.</li>
+                </ul>
+
+                <h4 class="fw-bold mb-3">4. Security Affirmation</h4>
+                <p class="text-muted mb-4">We employ 256-bit AES encryption. Due to our zero-knowledge architecture, we cannot recover your data if you lose your passwords. We are not liable for data loss resulting from forgotten credentials.</p>
+
+                <h4 class="fw-bold mb-3">5. Subscription & Billing</h4>
+                <p class="text-muted mb-0">Premium plans are billed annually. You may cancel at any time. Refunds are not provided for partial term periods.</p>
+            </div>
+            <div class="text-center">
+                <a href="{{ url_for('home') }}" class="btn btn-outline-primary rounded-pill px-4">Return Home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

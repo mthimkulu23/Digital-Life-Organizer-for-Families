@@ -300,6 +300,19 @@ def activity_log():
     logs = list(log_col.find({'user_id': session['user_id']}).sort('timestamp', -1).limit(50))
     return render_template('activity_log.html', activity_log=logs)
 
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.route('/cookies')
+def cookies():
+    return render_template('cookies.html')
+
+
 @app.route('/add_device', methods=['POST'])
 def add_device():
     if 'user_id' not in session:
