@@ -182,8 +182,8 @@
                     <div class="col-lg-4 col-md-6">
                         <h6 class="fw-bold mb-3 text-dark">Stay Updated</h6>
                         <p class="text-muted small mb-3">Subscribe to our newsletter for security tips.</p>
-                        <form class="d-flex gap-2">
-                            <input type="email" class="form-control form-control-sm border" placeholder="Email address" required>
+                        <form action="{{ url_for('subscribe') }}" method="POST" class="d-flex gap-2">
+                            <input type="email" name="email" class="form-control form-control-sm border" placeholder="Email address" required>
                             <button type="submit" class="btn btn-primary btn-sm px-3">Subscribe</button>
                         </form>
                     </div>
