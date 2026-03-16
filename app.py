@@ -188,6 +188,29 @@ def upload_document():
         flash('Document uploaded successfully to the Secure Vault!', 'success')
     return redirect(url_for('dashboard'))
 
+@app.route('/download_document/<doc_id>')
+def download_document(doc_id):
+    if 'user_id' not in session and 'emergency_view_user_id' not in session:
+        return redirect(url_for('login'))
+        
+    doc = documents_collection.find_one({'_id': ObjectId(doc_id)})
+    if not doc:
+        flash('Document not found.', 'danger')
+        return redirect(url_for('home'))
+        
+    authorized = False
+    if 'user_id' in session and str(doc['user_id']) == session['user_id']:
+        authorized = True
+    elif 'emergency_view_user_id' in session and str(doc['user_id']) == session['emergency_view_user_id']:
+        authorized = True
+        
+    if not authorized:
+        flash('Unauthorized access.', 'danger')
+        return redirect(url_for('home'))
+        
+    return send_from_directory(app.config['UPLOAD_FOLDER'], doc['filename'], as_attachment=True)
+
+
 @app.route('/emergency_access', methods=['GET', 'POST'])
 def emergency_access():
     if request.method == 'POST':

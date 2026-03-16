@@ -39,7 +39,7 @@
                     {{ doc.notes or 'No notes provided' }}
                 </td>
                 <td class="px-4 py-3 border-light text-end">
-                    <button class="btn btn-sm btn-outline-primary border fw-medium px-3"><i class="fa-solid fa-download me-1"></i> Retrieve File</button>
+                    <a href="{{ url_for('download_document', doc_id=doc._id) }}" class="btn btn-sm btn-outline-primary border fw-medium px-3" download><i class="fa-solid fa-download me-1"></i> Retrieve File</a>
                 </td>
             </tr>
             {% else %}
