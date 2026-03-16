@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeVault - Digital Life Organizer</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{{ url_for('home') }}">
+                <i class="fa-solid fa-shield-halved me-2 text-primary"></i>
+                <span class="text-gradient">LifeVault</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    {% if 'user_id' in session %}
+                        <li class="nav-item">
+                            <a class="nav-link fw-medium" href="{{ url_for('dashboard') }}">My Dashboard</a>
+                        </li>
+                        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                            <a class="btn btn-outline-danger btn-sm rounded-pill px-4 py-2" href="{{ url_for('logout') }}"><i class="fa-solid fa-sign-out-alt me-1"></i> Logout</a>
+                        </li>
+                    {% elif 'emergency_view_user_id' in session %}
+                        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                            <a class="btn btn-danger btn-sm rounded-pill px-4 py-2" href="{{ url_for('vault_exit') }}"><i class="fa-solid fa-lock me-1"></i> Exit Secure Vault</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item me-2">
+                            <a class="nav-link text-danger fw-medium" href="{{ url_for('emergency_access') }}"><i class="fa-solid fa-truck-medical me-1"></i> Emergency Access</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-medium" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                            <a class="btn btn-primary rounded-pill px-4 py-2 shadow-sm" href="{{ url_for('register') }}">Get Started</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 alert-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% set bs_category = category %}
+                    {% if category == 'error' %}{% set bs_category = 'danger' %}{% endif %}
+                    <div class="alert alert-{{ bs_category }} alert-dismissible fade show shadow-sm border-0 d-flex align-items-center" role="alert">
+                        {% if bs_category == 'success' %}
+                        <i class="fa-solid fa-circle-check fs-5 me-2"></i>
+                        {% elif bs_category == 'danger' %}
+                        <i class="fa-solid fa-circle-exclamation fs-5 me-2"></i>
+                        {% else %}
+                        <i class="fa-solid fa-circle-info fs-5 me-2"></i>
+                        {% endif %}
+                        <div>{{ message }}</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    {% block content %}{% endblock %}
+
+    <footer class="mt-auto py-4 bg-white border-top border-light mt-5">
+        <div class="container text-center text-muted col-md-6">
+            <p class="mb-0"><i class="fa-solid fa-shield-halved me-1 text-primary"></i> <strong>LifeVault</strong>. The secure digital life organizer for your family.</p>
+            <small class="mt-2 d-block">Designed with security and simplicity in mind.</small>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

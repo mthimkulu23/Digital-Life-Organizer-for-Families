@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-image: 
+            radial-gradient(at 0% 0%, rgba(239, 68, 68, 0.05) 0, transparent 40%),
+            radial-gradient(at 100% 0%, rgba(245, 158, 11, 0.05) 0, transparent 40%);
+    }
+    .custom-navbar {
+        border-bottom: 2px solid #EF4444;
+    }
+</style>
+
+<div class="container py-4">
+    <!-- Vault Header Section -->
+    <div class="glass-card bg-danger-soft p-4 rounded-4 shadow-sm mb-4 border border-danger d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <div class="d-flex align-items-center mb-3 mb-md-0">
+            <div class="bg-danger text-white rounded-circle p-3 me-4 d-flex align-items-center justify-content-center shadow-lg" style="width: 70px; height: 70px;">
+                <i class="fa-solid fa-lock-open fs-2 pulse-icon"></i>
+            </div>
+            <div>
+                <h3 class="fw-bold text-danger mb-1">Emergency Vault Unlocked</h3>
+                <p class="text-muted small mb-0 fw-medium">Viewing secure data for <strong>{{ user.name }}</strong> ({{ user.email }})</p>
+            </div>
+        </div>
+        <div class="bg-white p-3 rounded-pill shadow-sm d-flex align-items-center border border-light">
+            <i class="fa-solid fa-clock text-warning fs-5 me-2"></i>
+            <span class="small fw-bold text-dark">Access Logged Temporarily</span>
+        </div>
+    </div>
+
+    <!-- Instructions / Notes from User -->
+    <div class="glass-card shadow-lg mb-5 border-0 p-4 pb-0 position-relative overflow-hidden border-top border-warning border-4">
+        <h5 class="fw-bold text-warning mb-3 d-flex align-items-center"><i class="fa-solid fa-clipboard-list me-2"></i> Owner's Emergency Instructions</h5>
+        <div class="bg-light p-4 rounded-3 border mb-4">
+            <p class="mb-0 fst-italic text-dark">"If you are reading this, something has happened to me. Please use these documents to manage my estate and notify my trusted contacts below. Thank you for your help."</p>
+        </div>
+        
+        <div class="row pt-2 border-top">
+            <!-- Documents -->
+            <div class="col-md-7 border-end-md pb-4 pb-md-0">
+                <h6 class="fw-bold mb-3"><i class="fa-solid fa-folder-open text-primary me-2"></i> Decrypted Documents ({{ documents|length }})</h6>
+                <div class="table-responsive bg-white rounded-3 border shadow-sm">
+                    <table class="table table-hover mb-0 align-middle">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Type</th>
+                                <th>Notes</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for doc in documents %}
+                            <tr>
+                                <td class="fw-medium border-0 pt-3">
+                                    <i class="fa-solid fa-file text-info me-2"></i>{{ doc.doc_type }}
+                                </td>
+                                <td class="small text-muted border-0 pt-3">{{ doc.notes or 'No notes provided' }}</td>
+                                <td class="text-end border-0 pt-3">
+                                    <button class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm fw-bold"><i class="fa-solid fa-download me-1"></i> View</button>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center py-5 text-muted small fw-medium">No documents stored in the vault.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Trusted Contacts -->
+            <div class="col-md-5 ps-md-4">
+                <h6 class="fw-bold mb-3"><i class="fa-solid fa-users text-success me-2"></i> Verified Contacts ({{ contacts|length }})</h6>
+                <div class="bg-white rounded-3 border shadow-sm p-3 overflow-auto" style="max-height: 300px;">
+                    {% if contacts %}
+                        {% for contact in contacts %}
+                        <div class="d-flex justify-content-between align-items-center p-2 mb-2 bg-light rounded-3 border">
+                            <div class="d-flex flex-column">
+                                <span class="fw-bold mb-0 text-dark">{{ contact.name }} <span class="badge bg-secondary ms-1 shadow-sm">{{ contact.relation }}</span></span>
+                                <small class="text-muted"><i class="fa-solid fa-envelope me-1 text-primary"></i> {{ contact.email }}</small>
+                                <small class="text-muted"><i class="fa-solid fa-phone me-1 text-success"></i> {{ contact.phone }}</small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-4 text-muted small fw-medium">No external contacts listed.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="mb-4"></div>
+    </div>
+</div>
+{% endblock %}
