@@ -117,14 +117,14 @@
         </div>
     {% else %}
         <!-- PUBLIC LAYOUT (Logged out) -->
-        <nav class="public-navbar d-flex justify-content-between align-items-center">
+        <nav class="public-navbar d-flex flex-wrap justify-content-between align-items-center gap-3">
             <a href="{{ url_for('home') }}" class="public-brand">
                 <i class="fa-solid fa-shield-cat"></i> Digital Life Organizer
             </a>
-            <div class="d-flex gap-3 align-items-center">
-                <a href="{{ url_for('emergency_access') }}" class="btn btn-outline text-danger border-danger"><i class="fa-solid fa-truck-medical me-2"></i> Emergency Unlocking</a>
-                <a href="{{ url_for('login') }}" class="text-dark text-decoration-none fw-medium ms-3">Log in</a>
-                <a href="{{ url_for('register') }}" class="btn btn-primary ms-2">Start for free</a>
+            <div class="d-flex flex-wrap gap-2 align-items-center mx-auto mx-md-0">
+                <a href="{{ url_for('emergency_access') }}" class="btn btn-sm btn-outline text-danger border-danger"><i class="fa-solid fa-truck-medical me-1 d-none d-sm-inline"></i>Emergency</a>
+                <a href="{{ url_for('login') }}" class="text-dark text-decoration-none fw-medium ms-1 ms-md-3">Log in</a>
+                <a href="{{ url_for('register') }}" class="btn btn-sm btn-primary ms-1 ms-md-2">Start for free</a>
             </div>
         </nav>
         
