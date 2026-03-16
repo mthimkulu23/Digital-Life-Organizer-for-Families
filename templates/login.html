@@ -19,7 +19,16 @@
         </form>
         
         <div class="mt-4 pt-3 border-top">
-            <p class="text-muted small mb-0">Don't have an account? <a href="{{ url_for('register') }}" class="text-decoration-none fw-bold" style="color: var(--primary-blue);">Sign up for free</a></p>
+            <p class="text-muted small mb-3">Don't have an account? <a href="{{ url_for('register') }}" class="text-decoration-none fw-bold" style="color: var(--primary-blue);">Sign up for free</a></p>
+            
+            <!-- Premium CTA -->
+            <div class="rounded-3 p-3 text-center mt-2" style="background: linear-gradient(135deg, #1e3a8a10, #0ea5e920); border: 1px solid #1e3a8a30;">
+                <p class="fw-bold small mb-1 text-dark"><i class="fa-solid fa-crown text-warning me-1"></i> Protect your whole family</p>
+                <p class="text-muted" style="font-size: 0.75rem;">Unlimited contacts, documents, devices & more.</p>
+                <a href="{{ url_for('register', plan='premium') }}" class="btn btn-sm fw-semibold px-4 rounded-pill text-white w-100" style="background: linear-gradient(135deg, #1e3a8a, #0ea5e9);">
+                    Get the Family Plan — R200.00/year
+                </a>
+            </div>
         </div>
     </div>
 </div>

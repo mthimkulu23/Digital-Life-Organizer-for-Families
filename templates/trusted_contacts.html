@@ -43,4 +43,47 @@
     </div>
     {% endfor %}
 </div>
+
+<!-- Add Contact Modal -->
+<div class="modal fade" id="addContactModal" tabindex="-1" aria-labelledby="addContactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg p-3">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-primary" id="addContactModalLabel">
+                    <i class="fa-solid fa-user-plus me-2"></i> Add Trusted Contact
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted small mb-4">Add people you trust completely. They will need the emergency code to access your vault.</p>
+                <form action="{{ url_for('add_contact') }}" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Full Name</label>
+                        <input type="text" class="form-control" name="name" placeholder="Jane Doe" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Relationship</label>
+                        <select class="form-select" name="relation" required>
+                            <option value="Spouse">Spouse</option>
+                            <option value="Parent">Parent</option>
+                            <option value="Sibling">Sibling</option>
+                            <option value="Child">Child</option>
+                            <option value="Lawyer">Lawyer</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Email</label>
+                        <input type="email" class="form-control" name="email" placeholder="jane@email.com" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Phone Number</label>
+                        <input type="text" class="form-control" name="phone" placeholder="+27 82 000 0000" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-medium">Add Contact</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -7,6 +7,12 @@
         <p class="text-muted small mb-4">You are one step away from securing your digital life.</p>
         
         <form action="{{ url_for('register') }}" method="POST" class="text-start">
+            <input type="hidden" name="plan" value="{{ plan }}">
+            {% if plan == 'premium' %}
+            <div class="alert alert-primary border-0 rounded-3 py-2 px-3 small mb-3">
+                <i class="fa-solid fa-crown text-warning me-1"></i> <strong>Family Plan</strong> — $4/month selected. Full access unlocked.
+            </div>
+            {% endif %}
             <div class="mb-3">
                 <label class="form-label text-muted">Full Name</label>
                 <input type="text" class="form-control" name="name" placeholder="John Doe" required>

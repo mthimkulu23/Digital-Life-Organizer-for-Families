@@ -14,7 +14,7 @@
             
             <div class="d-flex flex-wrap gap-3 mb-4">
                 <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg rounded-pill px-5 fw-medium"><i class="fa-solid fa-cloud-arrow-up me-2"></i> Start for free</a>
-                <a href="#how-it-works" class="btn btn-outline btn-lg rounded-pill px-5 fw-medium bg-white">How it works?</a>
+                <a href="{{ url_for('register', plan='premium') }}" class="btn btn-lg rounded-pill px-5 fw-semibold text-white" style="background: linear-gradient(135deg, #1e3a8a, #0ea5e9);"><i class="fa-solid fa-crown me-2 text-warning"></i> Get Family Plan — R200/yr</a>
             </div>
             
             <div class="d-flex align-items-center gap-2 mt-4 text-muted small fw-medium">

@@ -17,7 +17,7 @@
                 <div class="mb-4">
                     <h4 class="fw-bold mb-2">Basic Starter</h4>
                     <div class="d-flex align-items-end gap-1 mb-3">
-                        <span class="display-5 fw-bold">$0</span>
+                        <span class="display-5 fw-bold">R0</span>
                         <span class="text-muted mb-2">/ forever</span>
                     </div>
                     <p class="text-muted small">For single individuals who need to store basic emergency info.</p>
@@ -30,7 +30,7 @@
                     <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> 1 Emergency Code</li>
                 </ul>
                 
-                <a href="{{ url_for('register') }}" class="btn btn-outline-primary w-100 fw-medium py-2 rounded-pill">Start for Free</a>
+                <a href="{{ url_for('register', plan='basic') }}" class="btn btn-outline-primary w-100 fw-medium py-2 rounded-pill">Start for Free</a>
             </div>
         </div>
         
@@ -40,10 +40,11 @@
                 <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-primary px-3 py-2">Most Popular</span>
                 <div class="mb-4 mt-2">
                     <h4 class="fw-bold mb-2">Family Plan</h4>
-                    <div class="d-flex align-items-end gap-1 mb-3">
-                        <span class="display-5 fw-bold">$4</span>
-                        <span class="text-muted mb-2">/ month</span>
+                    <div class="d-flex align-items-end gap-1 mb-1">
+                        <span class="display-5 fw-bold">R200</span>
+                        <span class="text-muted mb-2">/ year</span>
                     </div>
+                    <p class="text-success small fw-semibold mb-2"><i class="fa-solid fa-rotate me-1"></i> Billed annually — renews every year</p>
                     <p class="text-muted small">Everything you need to protect an entire household.</p>
                 </div>
                 
@@ -55,7 +56,7 @@
                     <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> Custom Estate Plans</li>
                 </ul>
                 
-                <a href="{{ url_for('register') }}" class="btn btn-primary w-100 fw-medium py-2 rounded-pill shadow-sm">Get Started</a>
+                <a href="{{ url_for('register', plan='premium') }}" class="btn btn-primary w-100 fw-medium py-2 rounded-pill shadow-sm">Get Started</a>
             </div>
         </div>
     </div>

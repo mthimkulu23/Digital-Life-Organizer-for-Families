@@ -1,6 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<!-- Upgrade Banner for Basic Users -->
+<div class="rounded-3 p-4 mb-5 d-flex align-items-center justify-content-between flex-wrap gap-3" style="background: linear-gradient(135deg, #fef9c3, #fef3c7); border: 1px solid #fbbf24;">
+    <div>
+        <p class="fw-bold mb-1 text-dark"><i class="fa-solid fa-crown text-warning me-2"></i> You are on the <strong>Basic Starter</strong> plan</p>
+        <p class="text-muted small mb-0">Limited to 1 contact & 5 documents. Unlock unlimited access, devices, life stories & more.</p>
+    </div>
+    <form action="{{ url_for('upgrade_to_premium') }}" method="POST">
+        <button type="submit" class="btn fw-semibold px-5 py-2 rounded-pill text-white shadow-sm" style="background: linear-gradient(135deg, #1e3a8a, #0ea5e9); white-space: nowrap;">
+            <i class="fa-solid fa-crown text-warning me-2"></i> Upgrade to Family Plan — R200.00/year
+        </button>
+    </form>
+</div>
+
+
 <div class="row align-items-center mb-5">
     <div class="col-md-7 pe-lg-5">
         <span class="tag-label">Digital Life Organizer</span>

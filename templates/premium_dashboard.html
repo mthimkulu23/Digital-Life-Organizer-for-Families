@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Premium Header Banner -->
+<div class="rounded-4 mb-5 p-4 p-md-5 position-relative overflow-hidden" style="background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #0ea5e9 100%);">
+    <div class="position-absolute top-0 end-0 opacity-10" style="font-size: 200px; line-height:1;">⬡</div>
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <span class="badge bg-warning text-dark fw-bold mb-3 px-3 py-2 rounded-pill"><i class="fa-solid fa-crown me-1"></i> Family Plan — Premium</span>
+            <h1 class="text-white fw-bold display-6 mb-2">Welcome back, {{ session['user_name'] }} 👋</h1>
+            <p class="text-white opacity-75 mb-4">Your full digital estate is protected. All features unlocked.</p>
+            <div class="d-flex gap-3 flex-wrap">
+                <button class="btn btn-white fw-semibold px-4 py-2 rounded-pill shadow" style="background:white; color:#1e3a8a;" data-bs-toggle="modal" data-bs-target="#addContactModal">
+                    <i class="fa-solid fa-user-plus me-2"></i> Add Contact
+                </button>
+                <button class="btn btn-outline-light fw-semibold px-4 py-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#uploadDocModal">
+                    <i class="fa-solid fa-cloud-arrow-up me-2"></i> Upload Document
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4 text-end d-none d-md-block">
+            <div class="text-white opacity-25" style="font-size: 120px;"><i class="fa-solid fa-shield-halved"></i></div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats Row -->
+<div class="row g-4 mb-5">
+    <div class="col-md-3 col-6">
+        <div class="card border-0 shadow-sm p-4 rounded-3 text-center h-100">
+            <div class="fs-1 fw-bold text-primary">{{ documents|length }}</div>
+            <div class="text-muted small mt-1">Documents Stored</div>
+            <div class="mt-2"><span class="badge bg-primary bg-opacity-10 text-primary"><i class="fa-solid fa-infinity me-1"></i> Unlimited</span></div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="card border-0 shadow-sm p-4 rounded-3 text-center h-100">
+            <div class="fs-1 fw-bold text-success">{{ contacts|length }}</div>
+            <div class="text-muted small mt-1">Trusted Contacts</div>
+            <div class="mt-2"><span class="badge bg-success bg-opacity-10 text-success"><i class="fa-solid fa-infinity me-1"></i> Unlimited</span></div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="card border-0 shadow-sm p-4 rounded-3 text-center h-100">
+            <div class="fs-1 fw-bold text-info">{{ devices|length }}</div>
+            <div class="text-muted small mt-1">Devices Registered</div>
+            <div class="mt-2"><span class="badge bg-info bg-opacity-10 text-info">Full Access</span></div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6">
+        <div class="card border-0 shadow-sm p-4 rounded-3 text-center h-100">
+            <div class="fs-1 fw-bold text-warning">{{ accounts|length }}</div>
+            <div class="text-muted small mt-1">Online Accounts</div>
+            <div class="mt-2"><span class="badge bg-warning bg-opacity-10 text-warning">Encrypted</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- Emergency Code Card -->
+<div class="card border-0 shadow-sm p-4 rounded-3 mb-5" style="background: linear-gradient(135deg, #fef9c3, #fef3c7);">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <div>
+            <p class="text-muted small fw-bold text-uppercase mb-1"><i class="fa-solid fa-key text-warning me-2"></i> Emergency Vault Access Code</p>
+            <span class="fs-4 fw-bold font-monospace text-dark" id="emergency-code-text">{{ user.emergency_code }}</span>
+            <p class="text-danger small mt-1 mb-0 fst-italic"><i class="fa-solid fa-circle-exclamation me-1"></i> Share only with your trusted contacts privately.</p>
+        </div>
+        <button class="btn btn-warning fw-semibold px-4 rounded-pill" onclick="navigator.clipboard.writeText('{{ user.emergency_code }}'); this.innerHTML='<i class=\'fa-solid fa-check me-1\'></i> Copied!'">
+            <i class="fa-solid fa-copy me-1"></i> Copy Code
+        </button>
+    </div>
+</div>
+
+<!-- Premium Content Grid -->
+<div class="row g-4 mb-5">
+    <!-- Documents -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-3 h-100">
+            <div class="card-header bg-white border-bottom py-3 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0"><i class="fa-solid fa-file-shield text-warning me-2"></i> Encrypted Documents</h6>
+                <button class="btn btn-sm btn-primary rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#uploadDocModal">+ Add</button>
+            </div>
+            <div class="card-body p-0">
+                {% for doc in documents %}
+                <div class="d-flex align-items-center px-4 py-3 border-bottom transition-hover">
+                    <div class="bg-warning bg-opacity-10 text-warning rounded-2 p-2 me-3"><i class="fa-solid fa-file-contract"></i></div>
+                    <div class="flex-grow-1">
+                        <div class="fw-semibold small">{{ doc.doc_type }}</div>
+                        <div class="text-muted" style="font-size: 0.75rem;">{{ doc.notes[:40] + '...' if doc.notes else 'No notes' }}</div>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success ms-2"><i class="fa-solid fa-lock"></i></span>
+                </div>
+                {% else %}
+                <div class="text-center py-5 text-muted small">
+                    <i class="fa-solid fa-folder-open fa-2x mb-3 d-block opacity-25"></i>
+                    No documents yet. Upload your first one.
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Trusted Contacts -->
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-3 h-100">
+            <div class="card-header bg-white border-bottom py-3 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0"><i class="fa-solid fa-people-group text-primary me-2"></i> Trusted Contacts</h6>
+                <button class="btn btn-sm btn-primary rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#addContactModal">+ Add</button>
+            </div>
+            <div class="card-body p-0">
+                {% for contact in contacts %}
+                <div class="d-flex align-items-center px-4 py-3 border-bottom transition-hover">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold me-3" style="width:40px; height:40px; min-width:40px;">
+                        {{ contact.name[0]|upper }}
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="fw-semibold small">{{ contact.name }}</div>
+                        <div class="text-muted" style="font-size: 0.75rem;">{{ contact.relation }} · {{ contact.email }}</div>
+                    </div>
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success ms-2">Active</span>
+                </div>
+                {% else %}
+                <div class="text-center py-5 text-muted small">
+                    <i class="fa-solid fa-users fa-2x mb-3 d-block opacity-25"></i>
+                    No contacts yet. Add your first trusted person.
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Devices & Online Accounts Row -->
+<div class="row g-4 mb-5">
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-white border-bottom py-3 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0"><i class="fa-solid fa-mobile-screen text-info me-2"></i> My Devices</h6>
+                <button class="btn btn-sm btn-outline-info rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#addDeviceModal">+ Add Device</button>
+            </div>
+            <div class="card-body p-0">
+                {% for device in devices %}
+                <div class="d-flex align-items-center px-4 py-3 border-bottom">
+                    <div class="bg-info bg-opacity-10 text-info rounded-2 p-2 me-3"><i class="fa-solid fa-mobile-screen"></i></div>
+                    <div>
+                        <div class="fw-semibold small">{{ device.device_name }}</div>
+                        <div class="text-muted" style="font-size: 0.75rem;">{{ device.device_type }}</div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center py-4 text-muted small"><i class="fa-solid fa-mobile fa-2x d-block mb-2 opacity-25"></i> No devices registered.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6">
+        <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-white border-bottom py-3 px-4 d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold mb-0"><i class="fa-solid fa-globe text-success me-2"></i> Online Accounts</h6>
+                <button class="btn btn-sm btn-outline-success rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#addAccountModal">+ Add Account</button>
+            </div>
+            <div class="card-body p-0">
+                {% for acct in accounts %}
+                <div class="d-flex align-items-center px-4 py-3 border-bottom">
+                    <div class="bg-success bg-opacity-10 text-success rounded-2 p-2 me-3"><i class="fa-solid fa-globe"></i></div>
+                    <div>
+                        <div class="fw-semibold small">{{ acct.platform }}</div>
+                        <div class="text-muted" style="font-size: 0.75rem;">{{ acct.username }} · {{ acct.wish }}</div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center py-4 text-muted small"><i class="fa-solid fa-globe fa-2x d-block mb-2 opacity-25"></i> No accounts saved yet.</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals (reused from dashboard) -->
+<!-- Upload Document Modal -->
+<div class="modal fade" id="uploadDocModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg p-3">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-primary"><i class="fa-solid fa-cloud-arrow-up me-2"></i> Upload Document</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('upload_document') }}" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Document Type</label>
+                        <select class="form-select" name="doc_type" required>
+                            <option value="Life Insurance">Life Insurance</option>
+                            <option value="Funeral Policy">Funeral Policy</option>
+                            <option value="Last Will & Testament">Last Will & Testament</option>
+                            <option value="Bank Details Summary">Bank Details Summary</option>
+                            <option value="Property Deed">Property Deed</option>
+                            <option value="Important Passwords DB">Important Passwords DB</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Instructions</label>
+                        <textarea class="form-control" name="notes" rows="3" placeholder="If I pass away, please..."></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold">Select File</label>
+                        <input class="form-control" type="file" name="file" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-medium">Encrypt & Store in Vault</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Contact Modal -->
+<div class="modal fade" id="addContactModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg p-3">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-primary"><i class="fa-solid fa-user-plus me-2"></i> Add Trusted Contact</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('add_contact') }}" method="POST">
+                    <div class="mb-3"><label class="form-label small fw-bold">Full Name</label><input type="text" class="form-control" name="name" required></div>
+                    <div class="mb-3"><label class="form-label small fw-bold">Relationship</label>
+                        <select class="form-select" name="relation" required>
+                            <option value="Spouse">Spouse</option><option value="Parent">Parent</option>
+                            <option value="Sibling">Sibling</option><option value="Child">Child</option>
+                            <option value="Lawyer">Lawyer</option><option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3"><label class="form-label small fw-bold">Email</label><input type="email" class="form-control" name="email" required></div>
+                    <div class="mb-4"><label class="form-label small fw-bold">Phone Number</label><input type="text" class="form-control" name="phone" required></div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-medium">Add Contact</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Device Modal -->
+<div class="modal fade" id="addDeviceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg p-3">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-success"><i class="fa-solid fa-mobile-screen me-2"></i> Add Device</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('add_device') }}" method="POST">
+                    <div class="mb-3"><label class="form-label small fw-bold">Device Name</label><input type="text" class="form-control" name="device_name" placeholder="iPhone 15 Pro" required></div>
+                    <div class="mb-3"><label class="form-label small fw-bold">Device Type</label>
+                        <select class="form-select" name="device_type" required>
+                            <option value="Phone">Phone</option><option value="Laptop">Laptop / Computer</option>
+                            <option value="Tablet">Tablet</option><option value="External Drive">External Drive</option><option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3"><label class="form-label small fw-bold">PIN / Password</label><input type="text" class="form-control" name="device_pin" placeholder="Stored encrypted"></div>
+                    <div class="mb-4"><label class="form-label small fw-bold">Instructions for Family</label><textarea class="form-control" name="notes" rows="3"></textarea></div>
+                    <button type="submit" class="btn btn-success w-100 py-2 fw-medium">Register Device</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Account Modal -->
+<div class="modal fade" id="addAccountModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg p-3">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title fw-bold text-primary"><i class="fa-solid fa-globe me-2"></i> Add Online Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('add_account') }}" method="POST">
+                    <div class="mb-3"><label class="form-label small fw-bold">Platform / Service</label><input type="text" class="form-control" name="platform" placeholder="Gmail, Facebook..." required></div>
+                    <div class="mb-3"><label class="form-label small fw-bold">Username / Email</label><input type="text" class="form-control" name="username" required></div>
+                    <div class="mb-3"><label class="form-label small fw-bold">Password (optional)</label><input type="text" class="form-control" name="password"></div>
+                    <div class="mb-4"><label class="form-label small fw-bold">Wish for this account</label>
+                        <select class="form-select" name="wish" required>
+                            <option value="Delete account">Delete account after I pass</option>
+                            <option value="Give access to family">Give access to family</option>
+                            <option value="Keep active">Keep active</option>
+                            <option value="Memorialize">Memorialize (e.g. Facebook)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-medium">Save Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

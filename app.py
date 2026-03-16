@@ -36,10 +36,12 @@ def home():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    plan = request.args.get('plan', 'basic')  # 'basic' or 'premium'
     if request.method == 'POST':
         name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('password')
+        plan = request.form.get('plan', 'basic')
         
         if users_collection.find_one({'email': email}):
             flash('Email already registered', 'danger')
@@ -53,15 +55,19 @@ def register():
             'email': email,
             'password': hashed_password,
             'emergency_code': emergency_code,
+            'plan': plan,
             'is_active': True,
         }).inserted_id
         
         session['user_id'] = str(user_id)
         session['user_name'] = name
+        session['user_plan'] = plan
         flash('Registration successful! Please save your emergency code securely.', 'success')
+        if plan == 'premium':
+            return redirect(url_for('premium_dashboard'))
         return redirect(url_for('dashboard'))
         
-    return render_template('register.html')
+    return render_template('register.html', plan=plan)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -73,7 +79,10 @@ def login():
         if user and check_password_hash(user['password'], password):
             session['user_id'] = str(user['_id'])
             session['user_name'] = user['name']
+            session['user_plan'] = user.get('plan', 'basic')
             flash('Login successful!', 'success')
+            if session['user_plan'] == 'premium':
+                return redirect(url_for('premium_dashboard'))
             return redirect(url_for('dashboard'))
             
         flash('Invalid email or password', 'danger')
@@ -89,12 +98,40 @@ def logout():
 def dashboard():
     if 'user_id' not in session:
         return redirect(url_for('login'))
+    if session.get('user_plan') == 'premium':
+        return redirect(url_for('premium_dashboard'))
         
     user = users_collection.find_one({'_id': ObjectId(session['user_id'])})
     contacts = list(contacts_collection.find({'user_id': session['user_id']}))
     documents = list(documents_collection.find({'user_id': session['user_id']}))
-    
+    # Enforce basic plan limits
+    contacts = contacts[:1]
+    documents = documents[:5]
     return render_template('dashboard.html', user=user, contacts=contacts, documents=documents)
+
+@app.route('/premium_dashboard')
+def premium_dashboard():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    if session.get('user_plan') != 'premium':
+        flash('Upgrade to the Family Plan to access the premium dashboard.', 'info')
+        return redirect(url_for('dashboard'))
+    user = users_collection.find_one({'_id': ObjectId(session['user_id'])})
+    contacts = list(contacts_collection.find({'user_id': session['user_id']}))
+    documents = list(documents_collection.find({'user_id': session['user_id']}))
+    devices = list(db.devices.find({'user_id': session['user_id']}))
+    accounts = list(db.online_accounts.find({'user_id': session['user_id']}))
+    return render_template('premium_dashboard.html', user=user, contacts=contacts, documents=documents, devices=devices, accounts=accounts)
+
+@app.route('/upgrade_to_premium', methods=['POST'])
+def upgrade_to_premium():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    users_collection.update_one({'_id': ObjectId(session['user_id'])}, {'$set': {'plan': 'premium'}})
+    session['user_plan'] = 'premium'
+    flash('🎉 Welcome to the Family Plan! Your vault is now fully unlocked.', 'success')
+    return redirect(url_for('premium_dashboard'))
+
 
 @app.route('/add_contact', methods=['POST'])
 def add_contact():
