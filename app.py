@@ -325,18 +325,6 @@ def activity_log():
     logs = list(log_col.find({'user_id': session['user_id']}).sort('timestamp', -1).limit(50))
     return render_template('activity_log.html', activity_log=logs)
 
-@app.route('/terms')
-def terms():
-    return render_template('terms.html')
-
-@app.route('/privacy')
-def privacy():
-    return render_template('privacy.html')
-
-@app.route('/cookies')
-def cookies():
-    return render_template('cookies.html')
-
 
 @app.route('/add_device', methods=['POST'])
 def add_device():
@@ -373,6 +361,33 @@ def help_page():
 @app.route('/pricing')
 def pricing():
     return render_template('pricing.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.route('/cookies')
+def cookies():
+    return render_template('cookies.html')
+
+@app.route('/subscribe', methods=['POST'])
+def subscribe():
+    import datetime, urllib.parse
+    email = request.form.get('email', '').strip()
+    if email:
+        db.subscribers.insert_one({'email': email, 'timestamp': datetime.datetime.utcnow()})
+        flash('Thank you! You have been subscribed to our newsletter.', 'success')
+    referrer = request.referrer
+    if referrer:
+        ref_url = urllib.parse.urlparse(referrer)
+        req_url = urllib.parse.urlparse(request.host_url)
+        if ref_url.netloc == req_url.netloc:
+            return redirect(referrer)
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
