@@ -32,15 +32,19 @@
             <tbody>
                 {% for doc in documents %}
                 <tr>
-                    <td class="px-4 py-3 border-light fw-medium">
-                        <i class="fa-solid fa-file-contract text-primary bg-primary bg-opacity-10 p-2 rounded me-2"></i>
-                        {{ doc.doc_type }}
+                    <td class="px-3 px-sm-4 py-3 border-light fw-medium">
+                        <div class="d-flex align-items-center">
+                            <i class="fa-solid fa-file-contract text-primary bg-primary bg-opacity-10 p-2 rounded me-2"></i>
+                            <span class="text-wrap text-break" style="max-width: 150px;">{{ doc.doc_type }}</span>
+                        </div>
                     </td>
-                    <td class="px-4 py-3 border-light text-muted small text-wrap" style="min-width: 200px;">
+                    <td class="px-3 px-sm-4 py-3 border-light text-muted small text-wrap text-break" style="min-width: 150px; max-width: 250px;">
                         {{ doc.notes or 'No notes provided' }}
                     </td>
-                    <td class="px-4 py-3 border-light text-end">
-                        <a href="{{ url_for('download_document', doc_id=doc._id) }}" class="btn btn-sm btn-outline-primary border fw-medium px-3" download><i class="fa-solid fa-download me-1"></i> Retrieve File</a>
+                    <td class="px-3 px-sm-4 py-3 border-light text-end">
+                        <a href="{{ url_for('download_document', doc_id=doc._id) }}" class="btn btn-sm btn-outline-primary border fw-medium px-2 px-sm-3 w-100 w-sm-auto text-nowrap" download>
+                            <i class="fa-solid fa-download me-1"></i> Retrieve
+                        </a>
                     </td>
                 </tr>
                 {% else %}
