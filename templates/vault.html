@@ -20,35 +20,37 @@
 
 <h6 class="text-uppercase fw-bold text-muted small mt-2 mb-3">DECRYPTED DOCUMENTS ({{ documents|length }})</h6>
 <div class="bg-white rounded-3 shadow-sm border mb-5 overflow-hidden">
-    <table class="table table-hover mb-0 align-middle">
-        <thead class="bg-light">
-            <tr>
-                <th class="py-3 px-4 fw-bold text-muted small">Document Type</th>
-                <th class="py-3 px-4 fw-bold text-muted small">Instructions / Notes</th>
-                <th class="py-3 px-4 text-end fw-bold text-muted small">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for doc in documents %}
-            <tr>
-                <td class="px-4 py-3 border-light fw-medium">
-                    <i class="fa-solid fa-file-contract text-primary bg-primary bg-opacity-10 p-2 rounded me-2"></i>
-                    {{ doc.doc_type }}
-                </td>
-                <td class="px-4 py-3 border-light text-muted small">
-                    {{ doc.notes or 'No notes provided' }}
-                </td>
-                <td class="px-4 py-3 border-light text-end">
-                    <a href="{{ url_for('download_document', doc_id=doc._id) }}" class="btn btn-sm btn-outline-primary border fw-medium px-3" download><i class="fa-solid fa-download me-1"></i> Retrieve File</a>
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="3" class="text-center py-5 text-muted small fw-medium">No documents stored in the vault.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle text-nowrap">
+            <thead class="bg-light">
+                <tr>
+                    <th class="py-3 px-4 fw-bold text-muted small">Document Type</th>
+                    <th class="py-3 px-4 fw-bold text-muted small">Instructions / Notes</th>
+                    <th class="py-3 px-4 text-end fw-bold text-muted small">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in documents %}
+                <tr>
+                    <td class="px-4 py-3 border-light fw-medium">
+                        <i class="fa-solid fa-file-contract text-primary bg-primary bg-opacity-10 p-2 rounded me-2"></i>
+                        {{ doc.doc_type }}
+                    </td>
+                    <td class="px-4 py-3 border-light text-muted small text-wrap" style="min-width: 200px;">
+                        {{ doc.notes or 'No notes provided' }}
+                    </td>
+                    <td class="px-4 py-3 border-light text-end">
+                        <a href="{{ url_for('download_document', doc_id=doc._id) }}" class="btn btn-sm btn-outline-primary border fw-medium px-3" download><i class="fa-solid fa-download me-1"></i> Retrieve File</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3" class="text-center py-5 text-muted small fw-medium">No documents stored in the vault.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <h6 class="text-uppercase fw-bold text-muted small mt-2 mb-3">VERIFIED EMERGENCY CONTACTS ({{ contacts|length }})</h6>
