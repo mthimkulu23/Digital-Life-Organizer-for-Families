@@ -61,13 +61,8 @@ def register():
             'is_active': True,
         }).inserted_id
         
-        session['user_id'] = str(user_id)
-        session['user_name'] = name
-        session['user_plan'] = plan
-        flash('Registration successful! Please save your emergency code securely.', 'success')
-        if plan == 'premium':
-            return redirect(url_for('premium_dashboard'))
-        return redirect(url_for('dashboard'))
+        flash('Registration successful! Please log in to view your emergency code.', 'success')
+        return redirect(url_for('login'))
         
     return render_template('register.html', plan=plan)
 
