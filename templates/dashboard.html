@@ -7,9 +7,9 @@
         <p class="fw-bold mb-1 text-dark"><i class="fa-solid fa-crown text-warning me-2"></i> You are on the <strong>Basic Starter</strong> plan</p>
         <p class="text-muted small mb-0">Limited to 1 contact & 5 documents. Unlock unlimited access, devices, life stories & more.</p>
     </div>
-    <form action="{{ url_for('upgrade_to_premium') }}" method="POST">
-        <button type="submit" class="btn fw-semibold px-5 py-2 rounded-pill text-white shadow-sm" style="background: linear-gradient(135deg, #1e3a8a, #0ea5e9); white-space: nowrap;">
-            <i class="fa-solid fa-crown text-warning me-2"></i> Upgrade to Family Plan — R200.00/year
+    <form action="{{ url_for('upgrade_to_premium') }}" method="POST" class="w-100 text-md-end" style="max-width: 100%; flex: 1 0 auto;">
+        <button type="submit" class="btn fw-semibold px-4 py-2 rounded-pill text-white shadow-sm w-100 text-wrap" style="background: linear-gradient(135deg, #1e3a8a, #0ea5e9);">
+            <i class="fa-solid fa-crown text-warning me-2"></i> Upgrade to Family Plan <span class="d-none d-sm-inline">— R200.00/year</span><span class="d-inline d-sm-none"><br>R200.00/year</span>
         </button>
     </form>
 </div>
