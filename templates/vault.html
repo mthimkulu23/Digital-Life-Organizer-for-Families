@@ -21,29 +21,29 @@
 <h6 class="text-uppercase fw-bold text-muted small mt-2 mb-3">DECRYPTED DOCUMENTS ({{ documents|length }})</h6>
 <div class="bg-white rounded-3 shadow-sm border mb-5 overflow-hidden">
     <!-- Desktop Table View -->
-    <div class="table-responsive d-none d-md-block">
+    <div class="table-responsive d-none d-lg-block">
         <table class="table table-hover mb-0 align-middle">
             <thead class="bg-light">
                 <tr>
-                    <th class="py-3 px-4 fw-bold text-muted small">Document Type</th>
-                    <th class="py-3 px-4 fw-bold text-muted small">Instructions / Notes</th>
-                    <th class="py-3 px-4 text-end fw-bold text-muted small">Action</th>
+                    <th class="py-3 px-4 fw-bold text-muted small border-bottom-0">Document Type</th>
+                    <th class="py-3 px-4 fw-bold text-muted small border-bottom-0">Instructions / Notes</th>
+                    <th class="py-3 px-4 text-end fw-bold text-muted small border-bottom-0">Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for doc in documents %}
                 <tr>
-                    <td class="px-4 py-3 border-light fw-medium">
+                    <td class="px-4 py-3 border-light fw-medium align-middle">
                         <div class="d-flex align-items-center">
                             <i class="fa-solid fa-file-contract text-primary bg-primary bg-opacity-10 p-2 rounded me-3"></i>
-                            <span>{{ doc.doc_type }}</span>
+                            <span class="text-dark">{{ doc.doc_type }}</span>
                         </div>
                     </td>
-                    <td class="px-4 py-3 border-light text-muted small w-50">
+                    <td class="px-4 py-3 border-light text-muted small w-50 align-middle">
                         {{ doc.notes or 'No notes provided' }}
                     </td>
-                    <td class="px-4 py-3 border-light text-end">
-                        <a href="{{ url_for('download_document', doc_id=doc._id) }}" class="btn btn-sm btn-outline-primary border fw-medium px-3 text-nowrap" download>
+                    <td class="px-4 py-3 border-light text-end align-middle">
+                        <a href="{{ url_for('download_document', doc_id=doc._id) }}" class="btn btn-sm btn-outline-primary fw-medium px-4 text-nowrap rounded-pill" download>
                             <i class="fa-solid fa-download me-1"></i> Retrieve File
                         </a>
                     </td>
@@ -58,7 +58,7 @@
     </div>
 
     <!-- Mobile Stacked Card View -->
-    <div class="d-md-none">
+    <div class="d-lg-none">
         {% for doc in documents %}
         <div class="p-3 {% if not loop.last %}border-bottom border-light{% endif %}">
             <div class="d-flex align-items-center mb-2">
